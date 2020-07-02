@@ -2,9 +2,9 @@
 {% load staticfiles %}
 
 {% block scripts %}
-    {#{ block.super }#}
+    {{ block.super }}
     {% load compress %}
-    {#% compress js %#}
+    {% compress js %}
     <script src="{% static "problems_multiple_choice/js/mc_submit.js" %}"
 	    type="text/javascript"></script>
     <script src="{% static "csrf_protection.js" %}" 
@@ -17,7 +17,7 @@
     {% include "pcrs/react_includes.html" %}
     <script src="{% static "content/build/future/components.js" %}"></script>
     <script src="{% static "content/build/reactive_content_page.js" %}></script>
-    {#% endcompress %#}
+    {% endcompress %}
 {% endblock %}
 
 {% block stylesheets %}

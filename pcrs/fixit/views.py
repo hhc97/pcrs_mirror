@@ -25,7 +25,6 @@ class studentFixitView(TemplateView):
         
         forms = defaultdict(dict)
         for problem in context['recommended_problems_content']:
-            print(problem.pk)
             forms[problem.pk] = MCSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
         context['forms'] = forms
         
