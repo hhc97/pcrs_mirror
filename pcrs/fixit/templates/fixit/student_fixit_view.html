@@ -1,0 +1,42 @@
+{% extends "pcrs/base.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+    {#{ block.super }#}
+    {% load compress %}
+    {#% compress js %#}
+    <script src="{% static "problems_multiple_choice/js/mc_submit.js" %}"
+	    type="text/javascript"></script>
+    <script src="{% static "csrf_protection.js" %}" 
+	    type="text/javascript"></script>
+    <script src="{% static "problems/js/problems_helper.js" %}"
+	    type-"text/javascript"></script>
+    <script src="{% static "bootstrap_less/bootstrap-3.2.0/js/modal.js" %}"
+	    type="text/javascript"></script>
+
+    {% include "pcrs/react_includes.html" %}
+    <script src="{% static "content/build/future/components.js" %}"></script>
+    <script src="{% static "content/build/reactive_content_page.js" %}></script>
+    {#% endcompress %#}
+{% endblock %}
+
+{% block stylesheets %}
+
+    {{ block.super }}
+    {% load compress %}
+    {% compress css %}
+	<link rel="stylesheet" href="{% static "less/challenge_page.css" %}">
+    {% endcompress %}
+{% endblock %}
+
+{% block content %}
+
+{% for problem in recommended_problems_content %}
+    
+    {% with problem=problem form=forms|get_item:problem.pk%}
+    <div id="multiple_choice-{{problem.pk}}">
+	    {% include "problems_multiple_choice/submission_widget.html" %}
+    {% endwith %}
+    </div>
+{% endfor %}
+{% endblock %}

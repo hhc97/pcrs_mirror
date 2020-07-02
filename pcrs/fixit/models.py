@@ -32,3 +32,4 @@ class problemRecommendedFixit(AbstractSelfAwareModel):
     problem_type = models.CharField("problem type", max_length=100, blank=True, null=True)
     problem_id = models.IntegerField()
 
+
