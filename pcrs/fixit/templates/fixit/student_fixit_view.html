@@ -6,13 +6,13 @@
     {% load staticfiles %}
     {% include "problems/code_problem_scripts.html" %}
     {% include "problems/visualizer_python_includes.html" %}
+    <script src="{% static "contnet/js/events.js" %}"></script>
     {% load compress %}
     {% compress js %}
     <script src="{% static "visualizer/python/pytutor.js" %}" type="text/javascript"></script>
     <script src="{% static "visualizer/python/d3.v2.min.js" %}" type="text/javascript"></script>
     <script src="{% static "visualizer/python/jquery.jsPlumb-1.3.10-all-min.js" %}" type="text/javascript"></script> <!-- for rendering SVG connectors. DO NOT UPGRADE ABOVE 1.3.10 OR ELSE BREAKAGE WILL OCCUR -->
     <script src="{% static "visualizer/python/jquery-ui-1.8.24.custom.min.js" %}" type="text/javascript"></script> <!-- for sliders and other UI elements -->
-    
     <script src="{% static "problems_multiple_choice/js/mc_submit.js" %}"
 	    type="text/javascript"></script>
     <script src="{% static "csrf_protection.js" %}" 
@@ -55,8 +55,8 @@
     <div id="multiple_choice-{{problem.pk}}">
 	    {% include "problems_multiple_choice/submission_widget.html" %}
     {% elif problem.problem_type == 'python' %}
-    <div id="{{ problem.get_problem_type_name }}-{{ problem.pk}}" class="code-mirror-wrapper">
-	    {% include "problems/submission_widget.html" %}
+	<div id="{{ problem.get_problem_type_name }}-{{ problem.pk}}" class="code-mirror-wrapper">
+	    {% include "problems_python/submission_widget.html" %}
     </div>
     {% endif %}
     {% endwith %}
