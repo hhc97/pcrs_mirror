@@ -20,7 +20,7 @@ class studentFixitView(TemplateView):
         context['recommended_problems'] = problemRecommendedFixit.objects.filter(user=self.request.user)
         context['recommended_problems_content'] = []
         for problem in context['recommended_problems']:
-            filter_problems = Problem.objects.get(id=problem.id)
+            filter_problems = Problem.objects.get(id=problem.problem_id)
             context['recommended_problems_content'].append(filter_problems)     
         
         forms = defaultdict(dict)
