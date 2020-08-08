@@ -12,7 +12,7 @@ from problems.models import (AbstractProgrammingProblem, AbstractSubmission,
 from pcrs.models import AbstractSelfAwareModel
 from pcrs.settings import PROJECT_ROOT
 
-import python_ta
+# import python_ta
 import io, re, os, tempfile
 from contextlib import redirect_stdout
 
@@ -26,7 +26,7 @@ class Problem(AbstractProgrammingProblem):
     A coding problem has all the properties of a problem, and
     a language and starter code
     """
-
+    problem_type = "python"
     language = models.CharField(max_length=50,
                                 choices=(('python', 'Python 3.4'),),
                                 default='python')
