@@ -22,7 +22,7 @@ import problems_python.models as python_models
 import problems_ra.models as ra_models
 import problems_sql.models as sql_models
 import problems_java.models as java_models
-import problems_r.models as r_models
+## import problems_r.models as r_models
 
 
 class EditorViewMixin:

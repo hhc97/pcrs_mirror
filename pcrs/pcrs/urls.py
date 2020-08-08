@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^login/', login.login_view, name='login'),
     url(r'^logout$', login.logout_view, name = 'logout_view'),
     url(r'^settings$', UserSettingsView.as_view(), name = 'user_settings_view'),
+    
+    url(r'^fixit/', include('fixit.urls')),
 
     url(r'^sections/', (include('users.section_urls'))),
     url(r'^users/', (include('users.user_urls'))),
