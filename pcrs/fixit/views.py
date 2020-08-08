@@ -17,7 +17,6 @@ class studentFixitView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['recommended_problems'] = problemRecommendedFixit.objects.filter(user=self.request.user)
         context['recommended_problems_content'] = []
-        
         for problem in context['recommended_problems']:
             if problem.problem_type == 'multiple_choice':
                 filter_problems = Problem.objects.get(id=problem.problem_id)
