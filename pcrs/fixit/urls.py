@@ -1,6 +1,6 @@
 from django.conf.urls import url 
 
-from fixit.views import *
+from .views import *
 
 from problems.views import *
 from problems_multiple_choice.forms import ProblemForm

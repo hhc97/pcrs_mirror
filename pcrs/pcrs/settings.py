@@ -22,17 +22,17 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pcrs',
-        'USER': 'postgres',
-        'PASSWORD': 'Yanoor#1',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '5432',          # Set to empty string for default.
+        'PORT': '',          # Set to empty string for default.
     }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -105,7 +105,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'pcrsfixit'
+SECRET_KEY = ''
 
 TEMPLATES = [
     {
@@ -169,8 +169,7 @@ INSTALLED_APPS = (
     'editor',
     'compressor',
     'users',
-    'fixit',
-    # 'django_cron',
+    'django_cron',
 ) + PROBLEM_APPS
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

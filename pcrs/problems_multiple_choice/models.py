@@ -18,7 +18,6 @@ class Problem(AbstractProblem):
     name = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField()
     no_correct_response = models.BooleanField(default=False)
-    problem_type = 'multiple_choice' 
 
     def __str__(self):
         if self.name:
