@@ -21,15 +21,14 @@ from contextlib import redirect_stdout
 
 # Create your models here:
 
-class studentFixitProfile(AbstractSelfAwareModel):
+class StudentFixitProfile(AbstractSelfAwareModel):
     user = models.ForeignKey(PCRSUser, on_delete=models.CASCADE)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     is_control_group = models.BooleanField("is control group", default=False)
 
 
-class problemRecommendedFixit(AbstractSelfAwareModel):
+class ProblemRecommendedFixit(AbstractSelfAwareModel):
     user = models.ForeignKey(PCRSUser, on_delete=models.CASCADE)
     problem_type = models.CharField("problem type", max_length=100, blank=True, null=True)
     problem_id = models.IntegerField()
-
 
