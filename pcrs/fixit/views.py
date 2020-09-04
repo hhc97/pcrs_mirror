@@ -10,12 +10,12 @@ from problems.forms import ProgrammingSubmissionForm
 
 class studentFixitView(TemplateView):
     template_name = 'fixit/student_fixit_view.html'
-    model = problemRecommendedFixit
+    model = ProblemRecommendedFixit
     form_class = MCSubmissionForm 
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['recommended_problems'] = problemRecommendedFixit.objects.filter(user=self.request.user)
+        context['recommended_problems'] = ProblemRecommendedFixit.objects.filter(user=self.request.user)
         context['recommended_problems_content'] = []
         for problem in context['recommended_problems']:
             if problem.problem_type == 'multiple_choice':
