@@ -8,3 +8,5 @@
 32 13 * * * cd /home/pcrsadmin/bin ; python add_343_users.py ../classlists/incoming/CSC343H1F ../classlists/CSC343H1F.old ; psql -d 343 -f 343.sql ; mv ../classlists/incoming/CSC343H1F ../classlists/CSC343H1F.old ; psql -d stg343_data -f 343_data.sql
 33 13 * * * cd /home/pcrsadmin/bin ; python add_258_users.py ../classlists/incoming/CSC258H1F ../classlists/CSC258H1F.old ; psql -d 258 -f 258.sql ; mv ../classlists/incoming/CSC258H1F ../classlists/CSC258H1F.old
 34 13 * * * cd /home/pcrsadmin/bin ; python add_209_users.py ../classlists/incoming/CSC209H1F ../classlists/CSC209H1F.old ; psql -d 209 -f 209.sql ; mv ../classlists/incoming/CSC209H1F ../classlists/CSC209H1F.old
+30 1 * * * cd /home/pcrsadmin/bin ; python build_data.py; scp ../home/pcrsadmin/bin kazmiza2@142.1.200.146:/home/fixit/fixit-prod
+
