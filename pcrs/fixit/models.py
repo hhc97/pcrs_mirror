@@ -28,6 +28,7 @@ class StudentFixitProfile(AbstractSelfAwareModel):
 
 
 class ProblemRecommendedFixit(AbstractSelfAwareModel):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(PCRSUser, on_delete=models.CASCADE)
     problem_type = models.CharField("problem type", max_length=100, blank=True, null=True)
     problem_id = models.IntegerField()
