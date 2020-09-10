@@ -3,7 +3,7 @@ import sys
 
 conn = psycopg2.connect(database='pcrs', host="pcrsdev.utm.utoronto.ca", user='waf', password='hehexd') #put pw here
 
-infile = open('top_n_questions_fo_users', 'rb')
+infile = open('top_n_questions_for_users.pkl', 'rb')
 rec_data = pickle.load(infile)
 infile.close()
 
