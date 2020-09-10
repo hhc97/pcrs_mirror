@@ -9,7 +9,7 @@ infile.close()
 
 dbCursor = conn.cursor() # opening conenction to db
 
-sqlInsertRow = "INSERT INTO fixit_problemrecommendedfixit values(%s, %s, %s, %s)" # query, inserting into fixit
+sqlInsertRow = sqlInsertRow = "INSERT INTO public.fixit_problemrecommendedfixit(problem_type, problem_id, user_id ) VALUES(%s, %s, %s)" # query, inserting into fixit
 
 for rec_problem in rec_data:
     # problem type, pid, uid
