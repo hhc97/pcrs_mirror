@@ -3,10 +3,13 @@ from django.shortcuts import render
 from fixit.models import *
 from django.views.generic import TemplateView
 from problems_multiple_choice.models import *
+from problems_multiple_choice.models import Problem   
 from problems_multiple_choice.forms import SubmissionForm as MCSubmissionForm
 from problems_multiple_choice.views import *
 from problems_python.models import Problem as PythonProblem
 from problems.forms import ProgrammingSubmissionForm 
+import problems_multiple_choice.models
+import problems_python.models
 
 class studentFixitView(TemplateView):
     template_name = 'fixit/student_fixit_view.html'
@@ -27,9 +30,9 @@ class studentFixitView(TemplateView):
 
         forms = defaultdict(dict)
         for problem in context['recommended_problems_content']:
-            if problem.problem_type == "multiple_choice":
+            if isinstance(problem, Problem):
                 forms[problem.problem_type][problem.pk] = MCSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
-            elif problem.problem_type == "python":
+            if isinstance(problem, PythonProblem):
                 forms[problem.problem_type][problem.pk] = ProgrammingSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
         context['forms'] = forms
         

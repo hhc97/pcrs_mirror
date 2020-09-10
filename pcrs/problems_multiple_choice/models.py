@@ -14,7 +14,6 @@ class Problem(AbstractProblem):
     """
     A multiple choice problem.
     """
-    problem_type = "multiple_choice"
     name = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField()
     no_correct_response = models.BooleanField(default=False)
