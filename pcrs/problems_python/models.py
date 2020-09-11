@@ -116,7 +116,7 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
             with io.StringIO() as buf, redirect_stdout(buf):  
                 python_ta.check_all(submittedCodeFile.name, config=pytaConfig)
                 pytaOutput = re.sub(r'^###.*\n', '', buf.getvalue(), flags=re.M)
-                pytaOutput = pytaOutput.split('\n', 1)[1]
+                pytaOutput = pytaOutput.split('\n', 3)[-1]
                 #remove copied student code where errors occur
                 pytaOutput = re.sub(r'^(\s*\d+|\s{4,}).*\n', '', pytaOutput, flags=re.M)
                 #make it a bit more compact
