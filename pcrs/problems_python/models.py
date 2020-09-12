@@ -13,7 +13,7 @@ from pcrs.models import AbstractSelfAwareModel
 from pcrs.settings import PROJECT_ROOT
 
 import python_ta
-import io, re, os, tempfile
+import io, re, os, tempfile, multiprocessing
 from contextlib import redirect_stdout
 
 
@@ -88,6 +88,13 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
         Run PyTA with the submitted code as input.
         Return the output of PyTA.
         """
+
+        def pyta_runner(q, fname):
+            with io.StringIO() as buf, redirect_stdout(buf):
+                python_ta.check_all(fname, config=pytaConfig)
+                output = buf.getvalue()
+            q.put(output)
+
         submittedFiles = self.preprocessTags()
         # We don't support multiple files yet
         submittedCode = submittedFiles[0]['code']
@@ -113,14 +120,20 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
 
             submittedCodeFile.write(submittedCode.encode())
             submittedCodeFile.close()
-            with io.StringIO() as buf, redirect_stdout(buf):  
-                python_ta.check_all(submittedCodeFile.name, config=pytaConfig)
-                pytaOutput = re.sub(r'^###.*\n', '', buf.getvalue(), flags=re.M)
-                pytaOutput = pytaOutput.split('\n', 3)[-1]
-                #remove copied student code where errors occur
-                pytaOutput = re.sub(r'^(\s*\d+|\s{4,}).*\n', '', pytaOutput, flags=re.M)
-                #make it a bit more compact
-                pytaOutput = re.sub(r'\n\n\s*\[', '\n[', pytaOutput).strip().replace('\n', '<br />').replace('[', '&emsp;[')
+           
+            # Workaround since PyTA has a memory leak: it grows in size on every check_all call 
+            q = multiprocessing.Queue()
+            p = multiprocessing.Process(target=pyta_runner, args=(q, submittedCodeFile.name))
+            p.start()
+            p.join()
+            bufdata = q.get()    # potential deadlock if the queue fills 
+
+            pytaOutput = re.sub(r'^###.*\n', '', bufdata, flags=re.M)
+            pytaOutput = pytaOutput.split('\n', 3)[-1]
+            #remove copied student code where errors occur
+            pytaOutput = re.sub(r'^(\s*\d+|\s{4,}).*\n', '', pytaOutput, flags=re.M)
+            #make it a bit more compact
+            pytaOutput = re.sub(r'\n\n\s*\[', '\n[', pytaOutput).strip().replace('\n', '<br />').replace('[', '&emsp;[')
         except Exception as e:
             pytaOutput = str(e)
         
