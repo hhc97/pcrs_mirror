@@ -29,7 +29,6 @@ class Problem(AbstractProgrammingProblem):
     language = models.CharField(max_length=50,
                                 choices=(('python', 'Python 3.4'),),
                                 default='python')
-    problem_type = 'python'
 
 class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
     """
