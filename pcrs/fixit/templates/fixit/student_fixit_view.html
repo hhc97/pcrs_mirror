@@ -50,15 +50,15 @@
 {% block content %}
 
 {% for problem in recommended_problems_content %}
-    {% with problem=problem form=forms|get_item:problem.problem_type|get_item:problem.pk%}
-    {% if problem.problem_type == 'multiple_choice' %}
-    <div id="multiple_choice-{{problem.pk}}">
+    {% with problem=problem form=forms|get_item:problem.get_problem_type_name|get_item:problem.pk%}
+    {% if problem.get_problem_type_name == 'multiple_choice' %}
+    <div id="{{ problem.get_problem_type_name}}-{{problem.pk}}">
 	    {% include "problems_multiple_choice/submission_widget.html" %}
-    {% elif problem.problem_type == 'python' %}
+    {% elif problem.get_problem_type_name == 'python' %}
 	<div id="{{ problem.get_problem_type_name }}-{{ problem.pk}}" class="code-mirror-wrapper">
 	    {% include "problems_python/submission_widget.html" %}
-    </div>
     {% endif %}
+	</div>
     {% endwith %}
 {% endfor %}
 {% endblock %}

@@ -34,9 +34,9 @@ class studentFixitView(TemplateView):
         forms = defaultdict(dict)
         for problem in context['recommended_problems_content']:
             if isinstance(problem, Problem):
-                forms[problem.problem_type][problem.pk] = MCSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
+                forms[problem.get_problem_type_name()][problem.pk] = MCSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
             if isinstance(problem, PythonProblem):
-                forms[problem.problem_type][problem.pk] = ProgrammingSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
+                forms[problem.get_problem_type_name()][problem.pk] = ProgrammingSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
         context['forms'] = forms
         
 
