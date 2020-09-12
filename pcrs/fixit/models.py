@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_delete
+from django.utils import timezone
 
 from problems.pcrs_languages import GenericLanguage
 from pcrs.model_helpers import has_changed
@@ -23,9 +24,11 @@ from contextlib import redirect_stdout
 
 class StudentFixitProfile(AbstractSelfAwareModel):
     user = models.ForeignKey(PCRSUser, on_delete=models.CASCADE)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE)
-    is_control_group = models.BooleanField("is control group", default=False)
-
+    # section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    # is_control_group = models.BooleanField("is control group", default=False)
+    problem_id = models.IntegerField(default=9999)
+    problem_type = models.CharField("problem type", max_length=100, blank=True, null=True)
+    submission_time = models.DateTimeField(default=timezone.now)
 
 class ProblemRecommendedFixit(AbstractSelfAwareModel):
     id = models.AutoField(primary_key=True)

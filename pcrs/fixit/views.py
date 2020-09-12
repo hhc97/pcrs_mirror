@@ -8,8 +8,11 @@ from problems_multiple_choice.forms import SubmissionForm as MCSubmissionForm
 from problems_multiple_choice.views import *
 from problems_python.models import Problem as PythonProblem
 from problems.forms import ProgrammingSubmissionForm 
+from fixit.serializers import *
 import problems_multiple_choice.models
 import problems_python.models
+from rest_framework import viewsets
+
 
 class studentFixitView(TemplateView):
     template_name = 'fixit/student_fixit_view.html'
@@ -40,4 +43,6 @@ class studentFixitView(TemplateView):
 
         return context
 
-
+class StudentFixitProfileViewSet(viewsets.ModelViewSet):
+    queryset = StudentFixitProfile.objects.all()
+    serializer_class = StudentFixitProfileSerializer
