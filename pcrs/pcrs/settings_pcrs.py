@@ -6,14 +6,14 @@ from datetime import timedelta
 # Select the types of problems visible in the UI.
 # app_name : language name
 INSTALLED_PROBLEM_APPS = {
-    # 'problems_python': 'Python',
+    'problems_python': 'Python',
     # 'problems_c': 'C',
     # 'problems_java': 'Java',
     # 'problems_rdb': '',
     # 'problems_sql': 'SQL',
     # 'problems_ra': 'Relational Algebra',
     # 'problems_r': 'R',
-    # 'problems_multiple_choice': '',
+    'problems_multiple_choice': '',
     # 'problems_timed': '',
     # 'problems_rating': '',
     # 'problems_short_answer': '',
@@ -23,8 +23,8 @@ USE_SAFEEXEC = False              # For C only, for now
 SAFEEXEC_USERID = "1004"          # Use the id command to identify correct values for these.
 SAFEEXEC_GROUPID = "1005"
 
-PRODUCTION = True
-DEBUG = False
+PRODUCTION = False
+DEBUG = True
 
 SQL_DEBUG = False                   # Suppresses logging of SQL queries
 TEMPLATE_DEBUG = DEBUG
@@ -40,6 +40,7 @@ RDB_DATABASE_test = 'crs_data_test'
 # Site prefix
 SITE_PREFIX = ''
 FORCE_SCRIPT_NAME = SITE_PREFIX
+FIXIT = False
 
 # Login details
 LOGIN_URL = SITE_PREFIX + '/login'
@@ -59,7 +60,7 @@ PROBLEM_APPS = (
     'problems_sql',
     'problems_rdb',
     'problems_ra',
-    'problems_r',
+    #'problems_r',
     'problems_multiple_choice',
     'problems_timed',
     'problems_rating',
