@@ -7,5 +7,6 @@ def site_settings(request):
     return {'site_prefix': settings.SITE_PREFIX, 
             'report_bugs': settings.REPORT_BUGS,
             'languages': languages, 
-            'problem_types': problem_types, 
+            'problem_types': problem_types,
+            'fixit': settings.FIXIT,
             'auth_shibboleth': settings.AUTH_TYPE == 'shibboleth'}
