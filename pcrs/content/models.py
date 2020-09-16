@@ -313,7 +313,7 @@ class Challenge(AbstractSelfAwareModel, AbstractNamedObject,
     @staticmethod
     def _get_completed_challenges(completed, total):
         return {challenge.pk for challenge in Challenge.objects.all()
-                if completed.get(challenge.pk, None) == total.get(challenge.pk, 0)}
+                if completed.get(challenge.pk, 0) == total.get(challenge.pk, 0)}
 
     @classmethod
     def get_challenge_problem_data(cls, user, section):
