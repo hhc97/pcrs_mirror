@@ -584,7 +584,12 @@ class SubmissionPreprocessorMixin:
             sub:   The raw submission from the student.
             delim: The delimiter to extract code around.
         '''
+        if not sub.startswith(delim):
+            sub = delim + sub
         delim_list = [m.start() for m in re.finditer(delim, sub)]
+        if len(delim_list) % 2 == 1:
+            delim_list.append(len(sub))
+            sub = sub + delim
 
         # Could not find student code
         if len(delim_list) == 0:
@@ -596,8 +601,6 @@ class SubmissionPreprocessorMixin:
             end =  delim_list[1]
             chunks.append(sub[begin:end])
             del delim_list[0], delim_list[0]
-        if len(delim_list) == 1:    # Attempt to fix "lost delimeter" that occurs
-            chunks.append(sub[delim_list[0] + len(delim) + 1:])
 
         return chunks
 
