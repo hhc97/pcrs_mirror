@@ -585,7 +585,7 @@ class SubmissionPreprocessorMixin:
             delim: The delimiter to extract code around.
         '''
         if not sub.startswith(delim):
-            sub = delim + sub
+            sub = f'{delim}\n{sub}'
         delim_list = [m.start() for m in re.finditer(delim, sub)]
         if len(delim_list) % 2 == 1:
             delim_list.append(len(sub))
