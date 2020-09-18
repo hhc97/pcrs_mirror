@@ -596,6 +596,8 @@ class SubmissionPreprocessorMixin:
             end =  delim_list[1]
             chunks.append(sub[begin:end])
             del delim_list[0], delim_list[0]
+        if len(delim_list) == 1:    # Attempt to fix "lost delimeter" that occurs
+            chunks.append(sub[delim_list[0] + len(delim) + 1:])
 
         return chunks
 
