@@ -1,7 +1,7 @@
 import psycopg2
 import sys
 
-conn = psycopg2.connect(database='pcrs', host="pcrsdev.utm.utoronto.ca", user='waf', password='hehexd') #put pw here
+conn = psycopg2.connect(database='csc108', user='fixit')
 
 infile = open('top_n_questions_for_users.pkl', 'rb')
 rec_data = pickle.load(infile)
@@ -16,10 +16,3 @@ for rec_problem in rec_data:
     dbCursor.execute(sqlInsertRow, rec_problem)
 
 conn.commit()
-
-
-
-
-
-
-
