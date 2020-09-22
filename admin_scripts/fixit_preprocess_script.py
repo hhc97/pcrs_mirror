@@ -1,11 +1,11 @@
 import pickle
-from data import PyProblem, PySubmission, MCOption, MCProblem, MCSubmissionOption, MCSubmission
+from data import PyProblem, PySubmission, MCOption, MCProblem, MCSubmissionOption, MCSubmission, UserCounter
 
 ######### DATABASE
 
 def get_connection():
     import psycopg2 
-    return psycopg2.connect("dbname='pcrs' user='postgres' host='localhost'")
+    return psycopg2.connect("dbname='csc108' user='fixit'") # host='localhost'")
 
 def generate_content(cur, query, key=None):
     cur.execute(query)
@@ -43,9 +43,9 @@ def get_py_tags(cur):
     query = "select * from problems_python_problem_tags;"
     return get_content(cur, query)
 
-def get_mc_tags(cur):
-    query = "select * from problems_python_problem_tags;"
-    return get_content(cur, query)
+#def get_mc_tags(cur):
+#    query = "select * from problems_python_problem_tags;"
+#    return get_content(cur, query)
 
 def get_mc_options(cur):
     query = "select * from problems_multiple_choice_option;"
@@ -146,17 +146,22 @@ def build_py_problems(cur):
         problems[problem_id].add_tag(tag_name)
     return problems
 
-def build_mc_submissions(cur, sample):
+def build_mc_submissions(cur, sample, user_d, nextuser):
     # get the list of students
-    users = get_content(cur, "select id from users_pcrsuser where is_student", "id")
+    users = get_content(cur, "select username from users_pcrsuser where is_student", "username")
     students = set(users.keys())
 
     # get the submission ids and time stamps
     submissions = {}
     for obj in generate_mc_submissions(cur, sample):
         submission_id = obj['id']
-        if int(obj["user_id"]) not in students:
+        if obj["user_id"] not in students:
             continue # ignore this line
+
+        if obj['user_id'] not in user_d:
+            user_d[obj['user_id']] = f'user{nextuser.next:04}'
+            nextuser.next += 1
+        obj['user_id'] = user_d[obj['user_id']]
         submissions[submission_id] = MCSubmission(**obj)
 
     # get the option selected
@@ -179,23 +184,33 @@ def build_mc_submissions(cur, sample):
 
     return submissions
 
-def build_py_submissions(cur, sample):
+def build_py_submissions(cur, sample, user_d, nextuser):
     # get the list of students
-    users = get_content(cur, "select id from users_pcrsuser where is_student", "id")
+    users = get_content(cur, "select username from users_pcrsuser where is_student", "username")
     students = set(users.keys())
 
     # get the submission ids and time stamps
     submissions = {}
     for obj in generate_py_submissions(cur, sample):
         submission_id = obj['id']
-        if int(obj["user_id"]) not in students:
+        if obj["user_id"] not in students:
             continue # ignore this line
+
+        if obj['user_id'] not in user_d:
+            user_d[obj['user_id']] = f'user{nextuser.next:04}'
+            nextuser.next += 1
+        obj['user_id'] = user_d[obj['user_id']]
         submissions[submission_id] = PySubmission(**obj)
     return submissions
 
 if __name__ == "__main__":
     conn = get_connection()
     cur = conn.cursor()
+
+    try:
+        users, nextuser = pickle.load(open("users.pckl", "rb"))
+    except:
+        users, nextuser = {}, UserCounter()
 
     try:
         py_problems = pickle.load(open("py_problems.pkl", "rb"))
@@ -213,17 +228,19 @@ if __name__ == "__main__":
     sample = False 
 
     if sample:
-        mc_submissions = build_mc_submissions(cur, sample)
-        py_submissions = build_py_submissions(cur, sample)
+        mc_submissions = build_mc_submissions(cur, sample, users, nextuser)
+        py_submissions = build_py_submissions(cur, sample, users, nextuser)
     else:
         try:
             mc_submissions = pickle.load(open("mc_submissions.pkl", "rb"))
         except:
-            mc_submissions = build_mc_submissions(cur, sample)
+            mc_submissions = build_mc_submissions(cur, sample, users, nextuser)
             pickle.dump(mc_submissions, open("mc_submissions.pkl", "wb"))
 
         try:
             py_submissions = pickle.load(open("py_submissions.pkl", "rb"))
         except:
-            py_submissions = build_py_submissions(cur, sample)
+            py_submissions = build_py_submissions(cur, sample, users, nextuser)
             pickle.dump(py_submissions, open("py_submissions.pkl", "wb"))
+
+    pickle.dump((users, nextuser), open("users.pckl", "wb"))
