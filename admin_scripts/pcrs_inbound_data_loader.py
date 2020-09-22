@@ -13,7 +13,7 @@ sqlInsertRow = sqlInsertRow = "INSERT INTO public.fixit_problemrecommendedfixit(
 
 for rec_problem in rec_data:
     # problem type, pid, uid
-    dbCursor.execute(sqlInsertRow, rec_data)
+    dbCursor.execute(sqlInsertRow, rec_problem)
 
 conn.commit()
 

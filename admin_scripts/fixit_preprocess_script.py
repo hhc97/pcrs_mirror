@@ -43,10 +43,6 @@ def get_py_tags(cur):
     query = "select * from problems_python_problem_tags;"
     return get_content(cur, query)
 
-def get_mc_tags(cur):
-    query = "select * from problems_python_problem_tags;"
-    return get_content(cur, query)
-
 def get_mc_options(cur):
     query = "select * from problems_multiple_choice_option;"
     return get_content(cur, query)
