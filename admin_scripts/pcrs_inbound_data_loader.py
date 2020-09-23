@@ -3,6 +3,8 @@ import sys
 from data import UserCounter
 
 users, nextuser = pickle.load(open("users.pckl", "rb"))
+inv_users = {v: k for k, v in users.items()}    # Assumes that user mapping is 1-1
+
 
 conn = psycopg2.connect(database='csc108', user='fixit')
 
@@ -17,7 +19,7 @@ sqlInsertRow = sqlInsertRow = "INSERT INTO public.fixit_problemrecommendedfixit(
 for rec_problem in rec_data:
     # problem type, pid, uid
     try:
-        rec_problem[2] = users[rec_problem[2]]
+        rec_problem[2] = inv_users[rec_problem[2]]
     except KeyError:
         print(f"User not found: {rec_problem[2]}", file=sys.stderr)
     dbCursor.execute(sqlInsertRow, rec_problem)
