@@ -12,7 +12,7 @@ from fixit.serializers import *
 import problems_multiple_choice.models
 import problems_python.models
 from rest_framework import viewsets
-
+from django.views.decorators.csrf import csrf_exempt
 
 class studentFixitView(TemplateView):
     template_name = 'fixit/student_fixit_view.html'
@@ -21,7 +21,8 @@ class studentFixitView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['recommended_problems'] = ProblemRecommendedFixit.objects.filter(user=self.request.user)
+        latest_date = ProblemRecommendedFixit.objects.filter(user=self.request.user).order_by('-date').first().date 
+        context['recommended_problems'] = ProblemRecommendedFixit.objects.filter(user=self.request.user, date=latest_date)
         context['recommended_problems_content'] = []
         for problem in context['recommended_problems']:
             if problem.problem_type == 'multiple_choice':
