@@ -26,7 +26,7 @@ $( document ).ready(function() {
             }
             submit_mc(submission, problem_pk, $(this)
                 .parents('div[id^="multiple_choice-"]')[0].id);
-        });
+	});
 
         $(all_mc[x]).find("[name='history']").click(function(){
             var mc_id = $(this).parents('div[id^="multiple_choice-"]')[0].id;
@@ -181,10 +181,11 @@ function submit_mc(submission, problem_pk, div_id) {
      * Submits the students solution to a MC problem
      */
 
-    var postParams = { csrftoken: csrftoken, submission : submission  };
 
-    $.post(root+'/problems/multiple_choice/'+problem_pk+'/run',
-            postParams,
+      var postParams = { csrftoken: csrftoken, submission : submission  };
+
+      $.post(root+'/problems/multiple_choice/'+problem_pk+'/fixit',
+	postParams,
             function(data) {
                 if (data['past_dead_line']){
                     alert('This submission is past the deadline!');
@@ -192,7 +193,7 @@ function submit_mc(submission, problem_pk, div_id) {
                     $('#'+div_id)
                         .find('#alert')
                         .after('<div id="deadline_msg" class="red-alert">Submitted after the deadline!<div>');
-                }
+			}
                 var display_element = $('#multiple_choice-'+problem_pk)
                     .find('#alert');
 
@@ -255,4 +256,5 @@ function submit_mc(submission, problem_pk, div_id) {
             },
         "json")
      .fail(function(jqXHR, textStatus, errorThrown) { console.log(textStatus); });
+     
 }
