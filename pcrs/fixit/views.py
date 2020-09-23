@@ -22,7 +22,7 @@ class studentFixitView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         latest_date = ProblemRecommendedFixit.objects.filter(user=self.request.user).order_by('-date').first().date 
-        context['recommended_problems'] = ProblemRecommendedFixit.objects.filter(user=self.request.user, date=latest_date)
+        context['recommended_problems'] = ProblemRecommendedFixit.objects.filter(user=self.request.user).filter(date=latest_date)
         context['recommended_problems_content'] = []
         for problem in context['recommended_problems']:
             if problem.problem_type == 'multiple_choice':
