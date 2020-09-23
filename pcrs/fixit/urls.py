@@ -7,6 +7,8 @@ from problems.views import *
 from problems_multiple_choice.forms import ProblemForm
 from problems_multiple_choice.models import *
 from rest_framework import routers
+from django.views.decorators.csrf import csrf_exempt
+
 
 router = routers.DefaultRouter()
 router.register(r'StudentFixitProfile', StudentFixitProfileViewSet)
