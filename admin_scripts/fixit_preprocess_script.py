@@ -208,17 +208,11 @@ if __name__ == "__main__":
     except:
         users, nextuser = {}, UserCounter()
 
-    try:
-        py_problems = pickle.load(open("py_problems.pkl", "rb"))
-    except:
-        py_problems = build_py_problems(cur)
-        pickle.dump(py_problems, open("py_problems.pkl", "wb"))
+    py_problems = build_py_problems(cur)
+    pickle.dump(py_problems, open("py_problems.pkl", "wb"))
 
-    try:
-        mc_problems = pickle.load(open("mc_problems.pkl", "rb"))
-    except:
-        mc_problems = build_mc_problems(cur)
-        pickle.dump(mc_problems, open("mc_problems.pkl", "wb"))
+    mc_problems = build_mc_problems(cur)
+    pickle.dump(mc_problems, open("mc_problems.pkl", "wb"))
 
     # only return a subset of the data
     sample = False 
@@ -227,16 +221,10 @@ if __name__ == "__main__":
         mc_submissions = build_mc_submissions(cur, sample, users, nextuser)
         py_submissions = build_py_submissions(cur, sample, users, nextuser)
     else:
-        try:
-            mc_submissions = pickle.load(open("mc_submissions.pkl", "rb"))
-        except:
-            mc_submissions = build_mc_submissions(cur, sample, users, nextuser)
-            pickle.dump(mc_submissions, open("mc_submissions.pkl", "wb"))
+        mc_submissions = build_mc_submissions(cur, sample, users, nextuser)
+        pickle.dump(mc_submissions, open("mc_submissions.pkl", "wb"))
 
-        try:
-            py_submissions = pickle.load(open("py_submissions.pkl", "rb"))
-        except:
-            py_submissions = build_py_submissions(cur, sample, users, nextuser)
-            pickle.dump(py_submissions, open("py_submissions.pkl", "wb"))
+        py_submissions = build_py_submissions(cur, sample, users, nextuser)
+        pickle.dump(py_submissions, open("py_submissions.pkl", "wb"))
 
     pickle.dump((users, nextuser), open("users.pckl", "wb"))
