@@ -1,8 +1,10 @@
-import pickle
 import psycopg2
 import sys
+import pickle
 
-conn = psycopg2.connect(database='csc108', user='fixit')
+# csc108 is real
+# 108clone is test
+conn = psycopg2.connect(database='108clone', user='fixit')
 
 infile = open('top_n_questions_for_users.pkl', 'rb')
 rec_data = pickle.load(infile)
@@ -14,11 +16,6 @@ sqlInsertRow = sqlInsertRow = "INSERT INTO public.fixit_problemrecommendedfixit(
 
 for rec_problem in rec_data:
     # problem type, pid, uid
-    try:
-        rec_problem[2] = inv_users[rec_problem[2]]
-    except KeyError:
-        print(f"User not found: {rec_problem[2]}", file=sys.stderr)
-        continue
     dbCursor.execute(sqlInsertRow, rec_problem)
 
 conn.commit()
