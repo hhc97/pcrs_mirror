@@ -46,7 +46,6 @@ class FixitPythonSubmissionViewMixin(PythonSubmissionViewMixin):
         print(request.get_full_path())
         url_path = str(request.get_full_path())
         path_split = url_path.split('/')
-        print(path_split)
         submission_fixit = StudentFixitProfile(problem_id = int(path_split[3]), user_id=self.request.user.id)
         submission_fixit.save()
         return results, error
