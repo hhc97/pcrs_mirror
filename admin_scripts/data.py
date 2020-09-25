@@ -4,10 +4,6 @@ training_set_ids = ['13345', '13619', '13688', '12815', '12744', '13570', '13632
 
 ######### CLASSES
 
-class UserCounter():
-    def __init__(self):
-        self.next = 0
-
 class PyProblem(object):
     def __init__(self, id, challenge_id, name, description, starter_code, max_score, **args):
         self.problem_id = id
