@@ -53,6 +53,9 @@
 {% endblock %}
 {% block content %}
 
+{% if not recommended_problems_content %}
+    <h2>Looks like you have no more recommendations today. Refresh the page or check back tomorrow to see new recommendations!</h2>
+{% endif %}
 {% for problem in recommended_problems_content %}
     {% with problem=problem form=forms|get_item:problem.get_problem_type_name|get_item:problem.pk%}
     {% if problem.get_problem_type_name == 'multiple_choice' %}
