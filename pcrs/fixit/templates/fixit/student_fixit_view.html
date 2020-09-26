@@ -64,6 +64,9 @@
     {% elif problem.get_problem_type_name == 'python' %}
 	<div id="{{ problem.get_problem_type_name }}-{{ problem.pk}}" class="code-mirror-wrapper">
 	    {% include "problems_python/submission_widget.html" %}
+    {% elif problem.get_problem_type_name == 'short_answer' %}
+    	<div id="{{ problem.get_problem_type_name}}-{{problem.pk}}">
+    	    {% include "problems_short_answer/submission_widget.html" %}
     {% endif %}
 	</div>
     {% endwith %}

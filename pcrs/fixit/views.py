@@ -7,10 +7,12 @@ from problems_multiple_choice.models import Problem
 from problems_multiple_choice.forms import SubmissionForm as MCSubmissionForm
 from problems_multiple_choice.views import *
 from problems_python.models import Problem as PythonProblem
+from problems_short_answer.models import Problem as SAproblem
 from problems.forms import ProgrammingSubmissionForm 
 from fixit.serializers import *
 import problems_multiple_choice.models
 import problems_python.models
+import problems_short_answer.models
 from rest_framework import viewsets
 from django.views.decorators.csrf import csrf_exempt
 
@@ -35,6 +37,9 @@ class studentFixitView(TemplateView):
             elif problem.problem_type == 'python':
                 filter_problems = PythonProblem.objects.get(id=problem.problem_id)
                 context['recommended_problems_content'].append(filter_problems)
+            elif problem.problem_type == "short_answer":
+                filter_problems = SAproblem.objects.get(id=problem.problem_id)
+                context['recommended_problems_content'].append(filter_problems)
 
         forms = defaultdict(dict)
         for problem in context['recommended_problems_content']:
@@ -44,8 +49,6 @@ class studentFixitView(TemplateView):
                 forms[problem.get_problem_type_name()][problem.pk] = ProgrammingSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
         context['forms'] = forms
         
-
-
         return context
 
 class StudentFixitProfileViewSet(viewsets.ModelViewSet):
