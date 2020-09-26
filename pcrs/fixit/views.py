@@ -15,6 +15,7 @@ import problems_python.models
 import problems_short_answer.models
 from rest_framework import viewsets
 from django.views.decorators.csrf import csrf_exempt
+from problems_python.views import PythonSubmissionAsyncView, PythonSubmissionViewMixin
 
 class studentFixitView(TemplateView):
     template_name = 'fixit/student_fixit_view.html'
@@ -54,3 +55,18 @@ class studentFixitView(TemplateView):
 class StudentFixitProfileViewSet(viewsets.ModelViewSet):
     queryset = StudentFixitProfile.objects.all()
     serializer_class = StudentFixitProfileSerializer
+
+
+class FixitPythonSubmissionViewMixin(PythonSubmissionViewMixin):
+    def record_submission(self, request):
+        results, error = super().record_submission(request)
+        url_path = str(request.get_full_path())
+        path_split = url_path.split('/')
+        submission_fixit = StudentFixitProfile(problem_id = int(path_split[3]), user_id=self.request.user.id)
+        submission_fixit.save()
+        return results, error
+
+class FixitPythonSubmissionAsyncView(PythonSubmissionAsyncView, FixitPythonSubmissionViewMixin):
+    def record_submission(self, request):
+        return FixitPythonSubmissionViewMixin.record_submission(self, request)
+

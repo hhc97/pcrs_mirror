@@ -40,20 +40,6 @@ class PythonSubmissionAsyncView(SubmissionAsyncView, PythonSubmissionViewMixin):
     def record_submission(self, request):
         return PythonSubmissionViewMixin.record_submission(self,request)
 
-class FixitPythonSubmissionViewMixin(PythonSubmissionViewMixin):
-    def record_submission(self, request):
-        results, error = super().record_submission(request)
-        print(request.get_full_path())
-        url_path = str(request.get_full_path())
-        path_split = url_path.split('/')
-        submission_fixit = StudentFixitProfile(problem_id = int(path_split[3]), user_id=self.request.user.id)
-        submission_fixit.save()
-        return results, error
-
-class FixitPythonSubmissionAsyncView(PythonSubmissionAsyncView, FixitPythonSubmissionViewMixin):
-    def record_submission(self, request):
-        return FixitPythonSubmissionViewMixin.record_submission(self, request)
-
 class PyTAClickEventView(TemplateView):
     """
     Create a PyTAClickEvent for a submission.
