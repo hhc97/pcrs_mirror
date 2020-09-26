@@ -56,7 +56,7 @@ urlpatterns = [
         PythonSubmissionAsyncView.as_view(model=Submission),
         name='coding_problem_async_submit'),
     url(r'^(?P<problem>[0-9]+)/fixit',
-        FixitPythonSubmissionAsyncView.as_view(model=FixitSubmissionObject),
+        FixitPythonSubmissionAsyncView.as_view(model=Submission),
         name='coding_problem_async_submit'),
     url(r'^editor/run$',
         EditorAsyncView.as_view(model=Submission, pType='python'),
