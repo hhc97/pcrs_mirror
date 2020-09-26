@@ -3,6 +3,7 @@ from django.conf.urls import url
 from problems.views import *
 from .views import *
 from problems.st_async_requests import visualizer_details
+from fixit.views import FixitPythonSubmissionAsyncView
 
 from .forms import ProblemForm, TestCaseForm
 from .models import Problem, TestCase, Submission, PyTAClickEvent

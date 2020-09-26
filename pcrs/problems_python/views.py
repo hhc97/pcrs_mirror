@@ -4,8 +4,6 @@ from django.views.generic import TemplateView
 from pcrs.settings import PYTA
 
 from problems.views import SubmissionViewMixin, SubmissionView, SubmissionAsyncView
-from .models import *
-from fixit.models import *
 
 class PythonSubmissionViewMixin(SubmissionViewMixin):
     def record_submission(self, request):
