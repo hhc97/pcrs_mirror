@@ -169,8 +169,6 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
         
         return ret
 
-class FixitSubmissionObject(Submission):
-    pass
 
 class PyTAClickEvent(AbstractSelfAwareModel, SubmissionPreprocessorMixin):
     """
