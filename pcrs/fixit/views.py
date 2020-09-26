@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 from problems_multiple_choice.models import *
 from problems_multiple_choice.models import Problem   
 from problems_multiple_choice.forms import SubmissionForm as MCSubmissionForm
+from problems_short_answer.forms import SubmissionForm as SASubmissionForm
 from problems_multiple_choice.views import *
 from problems_python.models import Problem as PythonProblem
 from problems_short_answer.models import Problem as SAproblem
@@ -41,15 +42,15 @@ class studentFixitView(TemplateView):
             elif problem.problem_type == "short_answer":
                 filter_problems = SAproblem.objects.get(id=problem.problem_id)
                 context['recommended_problems_content'].append(filter_problems)
-
         forms = defaultdict(dict)
         for problem in context['recommended_problems_content']:
             if isinstance(problem, Problem):
                 forms[problem.get_problem_type_name()][problem.pk] = MCSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
             if isinstance(problem, PythonProblem):
                 forms[problem.get_problem_type_name()][problem.pk] = ProgrammingSubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
+            if isinstance(problem, SAproblem):
+                forms[problem.get_problem_type_name()][problem.pk] = SASubmissionForm(problem=problem, simpleui=self.request.user.use_simpleui)
         context['forms'] = forms
-        
         return context
 
 class StudentFixitProfileViewSet(viewsets.ModelViewSet):
