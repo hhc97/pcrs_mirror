@@ -17,6 +17,7 @@ import problems_short_answer.models
 from rest_framework import viewsets
 from django.views.decorators.csrf import csrf_exempt
 from problems_python.views import PythonSubmissionAsyncView, PythonSubmissionViewMixin
+from problems_multiple_choice.views import SubmissionAsyncView
 
 class studentFixitView(TemplateView):
     template_name = 'fixit/student_fixit_view.html'
@@ -63,7 +64,7 @@ class FixitPythonSubmissionViewMixin(PythonSubmissionViewMixin):
         results, error = super().record_submission(request)
         url_path = str(request.get_full_path())
         path_split = url_path.split('/')
-        submission_fixit = StudentFixitProfile(problem_id = int(path_split[3]), user_id=self.request.user.id)
+        submission_fixit = StudentFixitProfile(problem_id = int(path_split[3]), user_id=self.request.user.id, problem_type="python")
         submission_fixit.save()
         return results, error
 
@@ -71,3 +72,10 @@ class FixitPythonSubmissionAsyncView(PythonSubmissionAsyncView, FixitPythonSubmi
     def record_submission(self, request):
         return FixitPythonSubmissionViewMixin.record_submission(self, request)
 
+class MCFixitSubmissionAsyncView(SubmissionAsyncView):
+    def post(self, request, *args, **kwargs):
+        url_path = str(request.get_full_path())
+        path_split = url_path.split('/')
+        submission_fixit = StudentFixitProfile(problem_id = int(path_split[3]), user_id=self.request.user.id, problem_type="multiple_choice")
+        submission_fixit.save()
+        return SubmissionAsyncView.post(self, request, *args, **kwargs)
