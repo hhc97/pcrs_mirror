@@ -6,7 +6,7 @@ from problems.views import (ProblemClearView, ProblemListView,
                             MonitoringAsyncView)
 
 from problems_multiple_choice.forms import ProblemForm
-from problems_multiple_choice.models import (Problem, FixitSubmission, Submission)
+from problems_multiple_choice.models import (Problem, Submission)
 from problems_multiple_choice.views import (OptionCreateView,
                                             OptionDeleteView, OptionUpdateView,
                                             ProblemCreateAndAddOptView,
