@@ -125,11 +125,11 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
             submittedCodeFile.close()
            
             # Workaround since PyTA has a memory leak: it grows in size on every check_all call 
-            q = multiprocessing.Queue()
+            q = multiprocessing.SimpleQueue()
             p = multiprocessing.Process(target=pyta_runner, args=(q, submittedCodeFile.name))
             p.start()
             p.join()
-            bufdata = q.get()    # potential deadlock if the queue fills 
+            bufdata = q.get()    # Using simplequeue to avoid deadlock
             if 'could not be run' in bufdata:
                 pytaOutput = bufdata
             else:
