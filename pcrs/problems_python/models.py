@@ -91,8 +91,11 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
 
         def pyta_runner(q, fname):
             with io.StringIO() as buf, redirect_stdout(buf):
-                python_ta.check_all(fname, config=pytaConfig)
-                output = buf.getvalue()
+                try:
+                    python_ta.check_all(fname, config=pytaConfig)
+                    output = buf.getvalue()
+                except: # Usually an index error in PyTA
+                    output = '[Line 1] PyTA could not be run'
             q.put(output)
 
         submittedFiles = self.preprocessTags()
@@ -127,13 +130,15 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
             p.start()
             p.join()
             bufdata = q.get()    # potential deadlock if the queue fills 
-
-            pytaOutput = re.sub(r'^###.*\n', '', bufdata, flags=re.M)
-            pytaOutput = pytaOutput.split('\n', 3)[-1]
-            #remove copied student code where errors occur
-            pytaOutput = re.sub(r'^(\s*\d+|\s{4,}).*\n', '', pytaOutput, flags=re.M)
-            #make it a bit more compact
-            pytaOutput = re.sub(r'\n\n\s*\[', '\n[', pytaOutput).strip().replace('\n', '<br />').replace('[', '&emsp;[')
+            if 'could not be run' in bufdata:
+                pytaOutput = bufdata
+            else:
+                pytaOutput = re.sub(r'^###.*\n', '', bufdata, flags=re.M)
+                pytaOutput = pytaOutput.split('\n', 3)[-1]
+                #remove copied student code where errors occur
+                pytaOutput = re.sub(r'^(\s*\d+|\s{4,}).*\n', '', pytaOutput, flags=re.M)
+                #make it a bit more compact
+                pytaOutput = re.sub(r'\n\n\s*\[', '\n[', pytaOutput).strip().replace('\n', '<br />').replace('[', '&emsp;[')
         except Exception as e:
             pytaOutput = str(e)
         
