@@ -2,7 +2,6 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_delete
-from django.utils import *
 
 from problems.pcrs_languages import GenericLanguage
 from pcrs.model_helpers import has_changed
