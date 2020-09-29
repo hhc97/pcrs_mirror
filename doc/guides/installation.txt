@@ -3,32 +3,32 @@
 <div class="codehilite"><pre>$  lsb_release -a
 No LSB modules are available.
 Distributor ID: Ubuntu
-Description:    Ubuntu 14.04.4 LTS
-Release:    14.04
+Description:    Ubuntu 18.04.5 LTS
+Release:    18.04
 Codename:   trusty
 </pre></div>
 
 <p>Throughout this guide, some words will be surrounded by asterisks (*), this will denote a variable you will need to fill in.</p>
 
-<p>Before installation, make sure python3.6 and postgres9.4.2 are already installed and running. If the installation will be serving C exercises, gcc 4.9 is required, and Java exercises require a Java developer kit (JDK 1.7) installation (for javac). For R exercises, R is required. If you use a python virtual environment, the packages virtualenv and virtualenvwrapper are required.</p>
+<p>Before installation, make sure python3.8 and postgres (we used 10.14) are already installed and running. If the installation will be serving C exercises, gcc is required (we used 7.5.0), and Java exercises require a Java developer kit (JDK 1.7) installation (for javac). For R exercises, R is required. If you use a python virtual environment, the packages virtualenv and virtualenvwrapper are required.</p>
 <div class="codehilite"><pre>$ psql --version
 psql <span class="o">(</span>PostgreSQL<span class="o">)</span> 9.3.9<span class="sb"></span>
 $ python3 --version
-Python 3.6.1
+Python 3.8.5
 $ gcc --version
-gcc <span class="o">(</span>Ubuntu 4.9.2-0ubuntu1~14.04<span class="o">)</span> 4.9.2
-Copyright <span class="o">(</span>C<span class="o">)</span> <span class="m">2014</span> Free Software Foundation, Inc.
-This is free software<span class="p">;</span> see the <span class="nb">source </span><span class="k">for</span> copying conditions.  There is NO
-warranty<span class="p">;</span> not even <span class="k">for</span> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
+...
 $ javac -version
-javac 1.7.0_10
+javac 11.0.8
 $ r --version
 R version 3.4.0
 </pre></div>
 
   <p>You can either install PCRS onto an empty database or onto an image pre-loaded with videos and content. We have an image available for the C programming language, but <i>this image is not distributed on the web, since it contains solutions to the exercises.</i> To get access, <a href="mailto:c.programming.ontario.online@gmail.com?Subject=Request%20for%20PCRS-C%20Database">mail us from your institution's email address</a>. Please include a web link to your institutional web page, so we can verify that you are a course instructor or system administrator.</p>
-  <p>The remainder of this guide provides details on the individual steps required to install PCRS. However, the required steps have also been placed into a script. The interactive installer will guide you through the configuration for your specific use case:</p>
-  <div class="codehilite"><pre>$ python3 <(curl -L https://bitbucket.org/utmandrew/pcrs/raw/6e77826b08727727524156ada78582b65ed37d6b/admin_scripts/pcrsdevinstaller.py)</pre></div>
+  <p>The remainder of this guide provides details on the individual steps required to install PCRS.</p>
+
+  <!-- However, the required steps have also been placed into a script. The interactive installer will guide you through the configuration for your specific use case:</p>
+  <div class="codehilite"><pre>$ python3 <(curl -L https://bitbucket.org/utmandrew/pcrs/raw/6e77826b08727727524156ada78582b65ed37d6b/admin_scripts/pcrsdevinstaller.py)</pre></div>-->
 
 <h3 id="markdown-header-web-config">Webserver Configuration</h3>
 
