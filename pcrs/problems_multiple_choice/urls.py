@@ -6,7 +6,7 @@ from problems.views import (ProblemClearView, ProblemListView,
                             MonitoringAsyncView)
 
 from problems_multiple_choice.forms import ProblemForm
-from problems_multiple_choice.models import (Problem, FixitSubmission, Submission)
+from problems_multiple_choice.models import (Problem, Submission)
 from problems_multiple_choice.views import (OptionCreateView,
                                             OptionDeleteView, OptionUpdateView,
                                             ProblemCreateAndAddOptView,
@@ -15,6 +15,7 @@ from problems_multiple_choice.views import (OptionCreateView,
                                             SubmissionAsyncView,
                                             SubmissionMCHistoryAsyncView)
 
+from fixit.views import MCFixitSubmissionAsyncView
 
 urlpatterns = [
     url(r'^list$', ProblemListView.as_view(model=Problem),
@@ -56,7 +57,7 @@ urlpatterns = [
         SubmissionAsyncView.as_view(model=Submission),
         name='mc_problem_async_submit'),
      url(r'^(?P<problem>[0-9]+)/fixit$',
-        SubmissionAsyncView.as_view(model=FixitSubmission),
+        MCFixitSubmissionAsyncView.as_view(model=Submission),
         name='mc_problem_async_submit_fixit'),
     url(r'^(?P<problem>[0-9]+)/history$',
         SubmissionMCHistoryAsyncView.as_view(model=Submission),
