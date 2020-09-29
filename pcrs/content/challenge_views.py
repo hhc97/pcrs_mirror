@@ -21,7 +21,7 @@ from problems_rating.forms import SubmissionForm as RatingSubmissionForm
 from problems_short_answer.forms import SubmissionForm as ShortAnswerSubmissionForm
 from django.core import serializers
 from django.shortcuts import redirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 class ChallengeView():
     model = Challenge

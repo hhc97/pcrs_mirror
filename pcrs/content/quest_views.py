@@ -4,7 +4,7 @@ import re
 from io import TextIOWrapper
 from datetime import date
 from django.core import serializers
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models, IntegrityError, DatabaseError, transaction
 from django.contrib.contenttypes.models import ContentType
 from django.forms.models import inlineformset_factory
