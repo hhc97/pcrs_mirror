@@ -30,13 +30,13 @@ except FileNotFoundError:
 
 #Look into their python version...
 if sys.version_info[0] == 3:
-    if sys.version_info[1] == 6:
-        print("Python Ver:\t3.6." + str(sys.version_info[2]))
+    if sys.version_info[1] == 8:
+        print("Python Ver:\t3.8." + str(sys.version_info[2]))
     else:
-        print("\nPython 3.6.X is required for this software.")
+        print("\nPython 3.8.X is required for this software.")
         sys.exit(1)
 else:
-    print("\nPython 3.6.X is required for this software.")
+    print("\nPython 3.8.X is required for this software.")
     sys.exit(1)
 
 #Look into their postgres version
@@ -45,12 +45,12 @@ try:
     out, err = result.communicate()
     out = bytes.decode(out, "UTF-8")
     postgresVer = out.split(" ")[2].split(".")
-    if postgresVer[0] == "9" and postgresVer[1] == "6":
+    if postgresVer[0] == "10" and postgresVer[1] == "14":
         print("Postgres Ver:\t" + ".".join(postgresVer).rstrip("\n"))
     else:
         print("Postgres Ver:\t" + ".".join(postgresVer).rstrip("\n") + " (NOT TESTED)")
 except FileNotFoundError:
-    print("Postgres 9.6.X is required for this software.")
+    print("Postgres 10.14.X is required for this software.")
     sys.exit(1)
 
 #GCC is next!
@@ -59,12 +59,12 @@ try:
     out, err = result.communicate()
     out = bytes.decode(out, "UTF-8")
     GCCVer = out.split(" ")[2].split(".")
-    if GCCVer[0] == "4" and GCCVer[1] == "9" and GCCVer[2] == "2":
+    if GCCVer[0] == "7" and GCCVer[1] == "5"::
         print("GCC Ver:\t" + ".".join(GCCVer))
     else:
         print("GCC Ver:\t" + ".".join(GCCVer) + " (NOT TESTED)")
 except FileNotFoundError:
-    print("GCC 4.9.2 is required for C PCRS.")
+    print("GCC 7.5 is required for C PCRS.")
 
 #A touch of java
 try:
@@ -73,7 +73,7 @@ try:
     out, err = result.communicate()
     err = bytes.decode(err, "UTF-8")
     JavaVer = err.split(" ")[1].split(".")
-    if JavaVer[0] == "1" and JavaVer[1] == "7":
+    if JavaVer[0] == "11" and JavaVer[1] == "0":
         print("Java JDK Ver:\t" + ".".join(JavaVer).rstrip("\n"))
     else:
         print("Java JDK Ver:\t" + ".".join(JavaVer).rstrip("\n") + " (NOT TESTED)")
