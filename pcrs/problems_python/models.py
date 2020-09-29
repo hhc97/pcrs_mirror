@@ -96,7 +96,7 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
                     output = buf.getvalue()
                 except: # Usually an index error in PyTA
                     output = '[Line 1] PyTA could not be run'
-            q.put(output)
+            q.put(output, timeout=1)    # 1 second timeout to avoid deadlock
 
         submittedFiles = self.preprocessTags()
         # We don't support multiple files yet
@@ -125,11 +125,11 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
             submittedCodeFile.close()
            
             # Workaround since PyTA has a memory leak: it grows in size on every check_all call 
-            q = multiprocessing.SimpleQueue()
+            q = multiprocessing.Queue()
             p = multiprocessing.Process(target=pyta_runner, args=(q, submittedCodeFile.name))
             p.start()
             p.join()
-            bufdata = q.get()    # Using simplequeue to avoid deadlock
+            bufdata = q.get(block=False)    # Not blocking in case no data is entered; being run after join
             if 'could not be run' in bufdata:
                 pytaOutput = bufdata
             else:
