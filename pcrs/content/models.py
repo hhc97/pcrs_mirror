@@ -113,8 +113,8 @@ class WatchedVideo(models.Model):
     """
     A record of a user starting a Video.
     """
-    video = models.ForeignKey(Video)
-    user = models.ForeignKey(PCRSUser, to_field='username')
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    user = models.ForeignKey(PCRSUser, to_field='username', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=now)
 
     @classmethod
@@ -174,7 +174,7 @@ class ContentSequenceItem(AbstractOrderedGenericObjectSequence):
     objects = (models.Q(model='problem') |
                models.Q(model='video') | models.Q(model='textblock'))
 
-    content_page = models.ForeignKey('ContentPage')
+    content_page = models.ForeignKey('ContentPage', on_delete=models.CASCADE)
 
     class Meta:
         # a problem can be in a single content page
@@ -209,7 +209,7 @@ class ContentPage(AbstractSelfAwareModel):
     """
     A page displaying a sequence of ContentSequenceItems.
     """
-    challenge = models.ForeignKey('Challenge')
+    challenge = models.ForeignKey('Challenge', on_delete=models.CASCADE)
     order = models.SmallIntegerField()
 
     class Meta:
@@ -452,8 +452,8 @@ class SectionQuest(AbstractLimitedVisibilityObject):
     """
     Quest setup for a specific Section.
     """
-    section = models.ForeignKey(Section)
-    quest = models.ForeignKey('Quest')
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    quest = models.ForeignKey('Quest', on_delete=models.CASCADE)
     open_on = models.DateTimeField(default=datetime.datetime.now, blank=True)
     due_on = models.DateTimeField(blank=True, null=True)
 

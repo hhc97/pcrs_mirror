@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import logout_then_login
 from django.template.context_processors import csrf
@@ -124,7 +124,7 @@ def login_view(request):
     # Failed logins and GET requests
     context = {'NEXT': NEXT, 'NOTIFICATION': NOTIFICATION}
     context.update(csrf(request))
-    return render_to_response('users/login.html', context)
+    return render(request, 'users/login.html', context)
 
 
 def logout_view(request):

@@ -2,7 +2,7 @@ import json
 import logging
 import datetime
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.timezone import localtime, utc

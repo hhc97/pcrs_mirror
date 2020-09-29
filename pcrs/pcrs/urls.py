@@ -10,7 +10,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^$', login.login_view, name='login'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
 
     url(r'^login/', login.login_view, name='login'),
     url(r'^logout$', login.logout_view, name = 'logout_view'),

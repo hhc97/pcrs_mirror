@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.files.base import ContentFile
 from django.http import HttpResponse, JsonResponse
 from problems_r.models import Script, delete_graph, FileSubmissionManager, Problem, Submission

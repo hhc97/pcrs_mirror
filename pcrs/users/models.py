@@ -4,7 +4,7 @@ from django.utils import timezone
 
 # authentication
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
+from six import python_2_unicode_compatible
 from django.contrib.auth.models import (BaseUserManager)
 import content.models
 from pcrs.models import AbstractSelfAwareModel
@@ -144,7 +144,7 @@ class PCRSUserManager(BaseUserManager):
 
 class PCRSUser(CustomAbstractBaseUser):
     username = models.CharField('username', max_length=30, unique=True, db_index=True)
-    section = models.ForeignKey("Section")
+    section = models.ForeignKey("Section", on_delete=models.SET_NULL)
 
     code_style_choices = (
         ('monokai', 'Dark Background'),
