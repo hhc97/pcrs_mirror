@@ -1,5 +1,5 @@
 import json
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.generic import (CreateView, UpdateView, DeleteView, FormView)
 from django.views.generic.detail import SingleObjectMixin
@@ -45,7 +45,7 @@ class PagesCreateView(PageView, GenericItemCreateView):
 
 class PageUpdateView(PageView, UpdateView):
     template_name = 'problems_timed/page_update.html'
-    
+
     def get_success_url(self):
         return reverse('timed_update',
                        kwargs={'pk': self.object.problem.pk})
@@ -79,34 +79,34 @@ class SubmissionView(ProtectedViewMixin, SubmissionViewMixinTimed,
 
     def get_success_url(self):
         return reverse('timed_list')
-    
+
     def get_request_info(self, request):
         info = {'user': request.user, 'section': request.user.section, 'problem': self.get_problem()}
         return info
-    
+
     def get(self, request, *args, **kwargs):
         info = self.get_request_info(request)
         total = Submission.objects.filter(user=info['user'], section=info['section'], problem=info['problem']).count()
-        
+
         show_button = 1
         if total >= info['problem'].attempts:
             show_button = 0
-        
+
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         context = self.get_context_data(form=form)
         context['show_button'] = show_button
         context['total_submissions'] = total
         return self.render_to_response(context)
-    
+
     def post(self, request, *args, **kwargs):
         form = self.get_form(self.get_form_class())
         info = self.get_request_info(request)
         submission = Submission.objects.filter(user=info['user'], section=info['section'], problem=info['problem']).order_by('-pk')[:1][0]
-        
+
         if submission.timestamp_complete:
             return HttpResponseForbidden()
-        
+
         submission.set_score(request.POST['submission'])
-        
+
         return HttpResponseRedirect('/content/quests')

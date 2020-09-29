@@ -167,13 +167,13 @@ class AbstractOrderedGenericObjectSequence2(AbstractGenericObjectForeignKey):
 
     parent_object_id = models.PositiveIntegerField()
     parent_content_type = models.ForeignKey(ContentType,
-                                            limit_choices_to=parents)
+                                            limit_choices_to=parents, on_delete=models.CASCADE)
     parent_content_object = GenericForeignKey('parent_content_type',
                                                       'parent_object_id')
 
     child_object_id = models.PositiveIntegerField()
     child_content_type = models.ForeignKey(ContentType,
-                                           limit_choices_to=children)
+                                           limit_choices_to=children, on_delete=models.CASCADE)
     child_content_object = GenericForeignKey('child_content_type',
                                                      'child_object_id')
 
