@@ -144,7 +144,7 @@ class PCRSUserManager(BaseUserManager):
 
 class PCRSUser(CustomAbstractBaseUser):
     username = models.CharField('username', max_length=30, unique=True, db_index=True)
-    section = models.ForeignKey("Section", on_delete=models.SET_NULL)
+    section = models.ForeignKey('Section', on_delete=models.PROTECT)
 
     code_style_choices = (
         ('monokai', 'Dark Background'),

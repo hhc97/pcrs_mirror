@@ -10,7 +10,7 @@ SCALE_TYPES = (
 )
 
 class Problem(AbstractProblem):
-    
+
     name = models.CharField(max_length=150)
     description = models.TextField()
     scale_type = models.CharField(choices=SCALE_TYPES, max_length=3)
@@ -18,11 +18,11 @@ class Problem(AbstractProblem):
     minimum = models.IntegerField(blank=True, null=True)
     maximum = models.IntegerField(blank=True, null=True)
     increment = models.FloatField(blank=True, null=True)
-    extra = models.NullBooleanField(blank=True, null=True)
-    
+    extra = models.BooleanField(blank=True, null=True)
+
     def __str__(self):
         return self.name
-    
+
     def get_options(self):
         opts = []
         for opt in self.options.splitlines():
@@ -37,9 +37,9 @@ class Problem(AbstractProblem):
         return content
 
 class Submission(AbstractSubmission):
-    
+
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    
+
     def set_score(self, rating):
         self.timestamp = timezone.now()
         self.has_best_score = True
