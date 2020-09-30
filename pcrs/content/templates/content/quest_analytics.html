@@ -32,7 +32,7 @@
         renderer.render();
     });
     </script>
-    {% load staticfiles %}
+    {% load static %}
     <script type="text/javascript"
         src="{% static "content/js/quest_analytics.js" %}"></script>
     <script type="text/javascript"
@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-    {% load staticfiles %}
+    {% load static %}
     <link rel="stylesheet" href="{% static "less/quest_analytics.css" %}">
 {% endblock %}
 

@@ -2,7 +2,7 @@
 {% if problem.minimum == None or problem.maximum == None or problem.increment == None %}
     <div class="alert alert-danger" role="alert">The required fields for this problem were not filled out.</div>
 {% else %}
-    {% load staticfiles %}
+    {% load static %}
     <script src="{% static "jquery-ui-1.10.4/js/jquery-ui-1.10.4.min.js" %}" type="text/javascript"></script>
     <link rel="stylesheet" href="{% static "jquery-ui-1.10.4/css/ui-lightness/jquery-ui-1.10.4.min.css" %}" type="text/css">
     <script type='text/javascript'>
@@ -20,7 +20,7 @@
                     $('#val_slider').val(ui.value);
                 }
             });
-            
+
             $('#val_slider').val($('#num_slider').slider('value'));
         });
     </script>
