@@ -122,9 +122,11 @@ SubmissionWrapper.prototype.getTestcases = function(code) {
     var call_path = "";
     if (this.isEditor) {
         call_path = root + '/problems/' + this.language + '/editor/run';
-    } else {
-        call_path = root + '/problems/' + this.language + '/' +
-            this.wrapperDivId.split("-")[1]+ '/run';
+    } else if (location.pathname.includes('fixit')){
+	call_path = root + '/problems/' + this.language + '/' +
+		                this.wrapperDivId.split("-")[1]+ '/fixit';
+    }  else {
+        call_path = root + '/problems/' + this.language + '/' + this.wrapperDivId.split("-")[1]+ '/run';
     }
 
     var postParams = { csrftoken: csrftoken, submission: code };

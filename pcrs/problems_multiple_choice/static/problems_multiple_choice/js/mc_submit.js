@@ -182,8 +182,12 @@ function submit_mc(submission, problem_pk, div_id) {
      */
 
     var postParams = { csrftoken: csrftoken, submission : submission  };
-
-    $.post(root+'/problems/multiple_choice/'+problem_pk+'/run',
+    if (location.pathname.includes('fixit')){
+	var pathname = '/problems/multiple_choice/'+problem_pk+'/fixit';
+    } else {
+	var pathname = '/problems/multiple_choice/'+problem_pk+'/run';
+    }
+    $.post(root+pathname,
             postParams,
             function(data) {
                 if (data['past_dead_line']){
