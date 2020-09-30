@@ -9,13 +9,12 @@ class ModelBackend(object):
     Authenticates against django.contrib.auth.models.User.
     """
 
-    def authenticate(self, username=None, **kwargs):
+    def authenticate(self, request, username=None, password=None):
+        print("In authenticate")
         UserModel = get_user_model()
-        if username is None:
-            username = kwargs.get(UserModel.USERNAME_FIELD)
         try:
             user = UserModel._default_manager.get_by_natural_key(username)
-            if settings.AUTH_TYPE == 'pass' and not user.check_password(kwargs.get('password')):
+            if settings.AUTH_TYPE == 'pass' and not user.check_password(password):
                 return None
             return user
         except UserModel.DoesNotExist:
