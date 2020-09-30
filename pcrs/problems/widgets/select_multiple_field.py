@@ -24,7 +24,7 @@ class SelectMultipleField(widgets.SelectMultiple):
 
     allow_multiple_selected = True
 
-    def render(self, name, value, attrs={}, choices=()):
+    def render(self, name, value, attrs={}, choices=(), renderer=None):
         rendered_attrs = {'class': HTML_ATTR_CLASS}
         rendered_attrs.update(attrs)
         if value is None:
