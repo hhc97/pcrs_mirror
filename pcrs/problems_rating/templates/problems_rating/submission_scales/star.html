@@ -12,8 +12,8 @@
     readonly/>
     </div>
     <br>
-    
-    {% load staticfiles %}
+
+    {% load static %}
     <script src="{% static "problems_rating/js/jquery.rateit.min.js" %}" type="text/javascript"></script>
     <link rel="stylesheet" href="{% static "problems_rating/css/rateit.css" %}" type="text/css"></link>
     {% if problem.extra %}
@@ -38,7 +38,7 @@
              data-rateit-resetable="false">
         </div>
     {% endif %}
-    
+
     <script type="text/javascript">
         $(document).ready( function() {
             var labels = [];

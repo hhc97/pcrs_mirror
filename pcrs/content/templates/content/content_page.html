@@ -1,5 +1,5 @@
 {% extends "pcrs/base.html" %}
-{% load staticfiles %}
+{% load static %}
 
 {#{% block less %}#}
 {#    <link rel="stylesheet/less"#}
@@ -13,7 +13,7 @@
 
 {% block scripts %}
     {{ block.super }}
-    {% load staticfiles %}
+    {% load static %}
     {% include "problems/code_problem_scripts.html" %}
     {% include "problems/visualizer_python_includes.html" %}
     {% load compress %}
