@@ -44,7 +44,7 @@ FORCE_SCRIPT_NAME = SITE_PREFIX
 # Login details
 LOGIN_URL = SITE_PREFIX + '/login'
 AUTH_USER_MODEL = 'users.PCRSUser'
-AUTHENTICATION_BACKENDS = ('pcrs_authentication.ModelBackend',)
+AUTHENTICATION_BACKENDS = ['pcrs_authentication.ModelBackend']
 AUTH_TYPE = 'none'       # 'shibboleth', 'pwauth', 'pass', or 'none'
 AUTOENROLL = False
 
