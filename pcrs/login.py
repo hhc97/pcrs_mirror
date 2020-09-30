@@ -54,9 +54,10 @@ def login_django(request, username):
 
     if settings.AUTH_TYPE == 'pass':
         passwd = request.POST.get('password', '')
-        user = authenticate(username=username, password=passwd)
+        user = authenticate(request, username=username, password=passwd)
     else:  # AUTH_TYPEs 'none', 'pwauth', and 'shibboleth'
-        user = authenticate(username=username)
+        user = authenticate(request, username=username)
+        print(username, user)
 
     if user is None:
         # Automatic accounts not set up or creation failed.
