@@ -123,7 +123,8 @@ SubmissionWrapper.prototype.getTestcases = function(code) {
     if (this.isEditor) {
         call_path = root + '/problems/' + this.language + '/editor/run';
     } else {
-        call_path = root + '/problems/' + this.language + '/' + this.wrapperDivId.split("-")[1]+ '/run';
+        call_path = root + '/problems/' + this.language + '/' +
+		    this.wrapperDivId.split("-")[1]+ '/run';
     }
 
     var postParams = { csrftoken: csrftoken, submission: code };
