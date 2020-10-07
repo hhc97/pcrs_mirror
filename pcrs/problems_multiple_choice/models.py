@@ -78,9 +78,6 @@ class Submission(AbstractSubmission):
         self.save()
         self.set_best_submission()
 
-class FixitSubmission(Submission):
-    pass
-
 class Option(AbstractSelfAwareModel):
     """
     A multiple choice problem answer option.
