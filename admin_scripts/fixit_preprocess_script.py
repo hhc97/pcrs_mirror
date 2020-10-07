@@ -43,6 +43,10 @@ def get_py_tags(cur):
     query = "select * from problems_python_problem_tags;"
     return get_content(cur, query)
 
+#def get_mc_tags(cur):
+#    query = "select * from problems_python_problem_tags;"
+#    return get_content(cur, query)
+
 def get_mc_options(cur):
     query = "select * from problems_multiple_choice_option;"
     return get_content(cur, query)
@@ -188,6 +192,12 @@ if __name__ == "__main__":
     cur = conn.cursor()
 
     users = {student['username']: student['id'] for student in get_content(cur, "select id, username from users_pcrsuser where is_student")}
+    fixit = get_content(cur, "select * from fixit_studentfixitprofile", "id")
+    fixit_exclude = [(fixit[id]['problem_type'], fixit[id]['problem_id'], fixit[id]['user_id']) for id in fixit.keys()]
+    pickle.dump(fixit_exclude, open("fixit_submissions.pkl", "wb"))
+    
+    short_answer = get_content(cur, "select * from problems_short_answer_submission")
+    pickle.dump(short_answer, open("short_answers.pkl", "wb"))
 
     py_problems = build_py_problems(cur)
     pickle.dump(py_problems, open("py_problems.pkl", "wb"))
