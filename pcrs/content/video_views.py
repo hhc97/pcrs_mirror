@@ -53,6 +53,7 @@ class VideoRecordWatchView(ProtectedViewMixin, CreateView):
     Create a record of a user watching a video.
     """
     model = Video
+    fields = '__all__'
 
     def post(self, request, *args, **kwargs):
         video = self.get_object()
