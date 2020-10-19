@@ -83,7 +83,7 @@ def login_django(request, username):
     if settings.AUTH_TYPE == 'shibboleth':
         # redirect user letting them know they do not belong to this server
         redirect_link = settings.SITE_PREFIX + '/usernotfound.html'
-        return HttpResponseRedirect(redirect_link)
+        return render(request, 'usernotfound.html', {})
 
     return None
 
@@ -129,10 +129,10 @@ def login_view(request):
 
 
 def logout_view(request):
-    """ Log out the user using django logout and redirect them to the login page. """
+    """ Log out the user using django logout and redirect them to the login page or a message.
+    """
     user = getattr(request, 'user', None)
     logger = logging.getLogger('activity.logging')
     logger.info(str(localtime(datetime.datetime.utcnow().replace(tzinfo=utc))) + " | " +
             str(user) + " | Log out")
-    from pcrs.settings import LOGIN_URL
-    return logout_then_login(request, login_url=LOGIN_URL)
+    return render(request, 'loggedout.html', {})
