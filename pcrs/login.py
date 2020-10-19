@@ -57,7 +57,6 @@ def login_django(request, username):
         user = authenticate(request, username=username, password=passwd)
     else:  # AUTH_TYPEs 'none', 'pwauth', and 'shibboleth'
         user = authenticate(request, username=username)
-        print(username, user)
 
     if user is None:
         # Automatic accounts not set up or creation failed.
@@ -74,16 +73,14 @@ def login_django(request, username):
             index = previous_url.find("next=")
             # Build new redirect_link
             if index >= 0:
-                redirect_link = previous_url[index + 5:]
+                redirect_link = previous_url[index + 5:].replace('%3D', '=').replace('%26', '&').replace('%3F', '?')
 
         login(request, user)
         return HttpResponseRedirect(redirect_link)
 
     # Actions if user cannot be logged in.
     if settings.AUTH_TYPE == 'shibboleth':
-        # redirect user letting them know they do not belong to this server
-        redirect_link = settings.SITE_PREFIX + '/usernotfound.html'
-        return render(request, 'usernotfound.html', {})
+        return render(request, 'pcrs/usernotfound.html', {})
 
     return None
 
@@ -135,4 +132,4 @@ def logout_view(request):
     logger = logging.getLogger('activity.logging')
     logger.info(str(localtime(datetime.datetime.utcnow().replace(tzinfo=utc))) + " | " +
             str(user) + " | Log out")
-    return render(request, 'loggedout.html', {})
+    return render(request, 'pcrs/loggedout.html', {})
