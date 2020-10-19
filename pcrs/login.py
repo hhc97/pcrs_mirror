@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import logout_then_login
+from django.contrib.auth import authenticate, login, logout
 from django.template.context_processors import csrf
 
 import content.models
@@ -132,4 +131,5 @@ def logout_view(request):
     logger = logging.getLogger('activity.logging')
     logger.info(str(localtime(datetime.datetime.utcnow().replace(tzinfo=utc))) + " | " +
             str(user) + " | Log out")
+    logout(request)
     return render(request, 'pcrs/loggedout.html', {})
