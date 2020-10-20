@@ -11,7 +11,6 @@ import logging
 import datetime
 from django.utils.timezone import localtime, utc
 
-import os
 import subprocess
 
 
@@ -98,7 +97,7 @@ def login_view(request):
 
     # AUTH_TYPE 'shibboleth' uses an environment variable instead of check_authorization
     if settings.AUTH_TYPE == "shibboleth":
-        username = os.environ["utorid"]
+        username = request.environ["utorid"]
         response = login_django(request, username)
         if response:
             return response
