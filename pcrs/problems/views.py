@@ -3,6 +3,7 @@ import time
 import datetime
 import decimal
 import logging
+import os
 
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import redirect, get_object_or_404, render
@@ -10,7 +11,7 @@ from django.views.generic import (DetailView, UpdateView, DeleteView, FormView,
                                   View)
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.timezone import localtime, now
-from pcrs.settings import DEBUG,FILE_LIFESPAN
+from pcrs.settings import DEBUG, FILE_LIFESPAN
 
 from pcrs.generic_views import (GenericItemCreateView, GenericItemListView,
                                 GenericItemUpdateView)
