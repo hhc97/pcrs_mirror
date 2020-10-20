@@ -3,7 +3,6 @@ import time
 import datetime
 import decimal
 import logging
-import os
 
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import redirect, get_object_or_404, render
