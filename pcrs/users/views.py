@@ -1,8 +1,13 @@
 from django.views.generic import FormView
 
+from pcrs.settings import AUTH_TYPE
+from django.contrib.auth import authenticate, login
+
 from users.forms import SettingsForm, UserForm
 from users.section_views import SectionViewMixin
 from users.views_mixins import ProtectedViewMixin, CourseStaffViewMixin
+
+import logging
 
 
 class UserSettingsView(ProtectedViewMixin, FormView):
@@ -43,6 +48,11 @@ class UserViewMixin(SectionViewMixin):
     """
 
     def get_user(self):
+        if AUTH_TYPE == 'shibboleth' and self.request.environ['utorid'] != self.request.user.get_username():
+            logger = logging.getLogger('activity.logging')
+            logger.info(f"User did not match: {self.request.environ['utorid']} vs. {self.request.user.get_username()}")
+            user = authenticate(username=self.request.environ['utorid'])
+            login(self.request, user)
         return self.request.session.get('viewing_as', None) or self.request.user
 
     def get_section(self):
