@@ -8,13 +8,6 @@ function submit_mc(submission, problem_pk, div_id) {
     $.post(root+'/problems/multiple_choice/'+problem_pk+'/fixit',
             postParams,
             function(data) {
-                if (data['past_dead_line']){
-                    alert('This submission is past the deadline!');
-                    $('#'+div_id).find('#deadline_msg').remove();
-                    $('#'+div_id)
-                        .find('#alert')
-                        .after('<div id="deadline_msg" class="red-alert">Submitted after the deadline!<div>');
-                }
                 var display_element = $('#multiple_choice-'+problem_pk)
                     .find('#alert');
 
