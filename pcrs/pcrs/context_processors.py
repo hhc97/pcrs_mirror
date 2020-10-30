@@ -9,4 +9,5 @@ def site_settings(request):
             'languages': languages, 
             'problem_types': problem_types,
             'fixit': settings.FIXIT,
+            'fixit_display_color': settings.FIXIT_COLOR_DISPLAY,
             'auth_shibboleth': settings.AUTH_TYPE == 'shibboleth'}
