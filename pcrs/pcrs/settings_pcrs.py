@@ -6,17 +6,17 @@ from datetime import timedelta
 # Select the types of problems visible in the UI.
 # app_name : language name
 INSTALLED_PROBLEM_APPS = {
-    'problems_python': 'Python',
+    # 'problems_python': 'Python',
     # 'problems_c': 'C',
     # 'problems_java': 'Java',
     # 'problems_rdb': '',
     # 'problems_sql': 'SQL',
     # 'problems_ra': 'Relational Algebra',
     # 'problems_r': 'R',
-    'problems_multiple_choice': '',
+    # 'problems_multiple_choice': '',
     # 'problems_timed': '',
     # 'problems_rating': '',
-    'problems_short_answer': '',
+    # 'problems_short_answer': '',
 }
 
 USE_SAFEEXEC = False              # For C only, for now
@@ -40,7 +40,7 @@ RDB_DATABASE_test = 'crs_data_test'
 # Site prefix
 SITE_PREFIX = ''
 FORCE_SCRIPT_NAME = SITE_PREFIX
-FIXIT = True
+FIXIT = False
 FIXIT_COLOR_DISPLAY = False
 
 # Login details
@@ -61,7 +61,7 @@ PROBLEM_APPS = (
     'problems_sql',
     'problems_rdb',
     'problems_ra',
-    # 'problems_r',
+    'problems_r',
     'problems_multiple_choice',
     'problems_timed',
     'problems_rating',
