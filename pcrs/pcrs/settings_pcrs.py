@@ -23,8 +23,8 @@ USE_SAFEEXEC = False              # For C only, for now
 SAFEEXEC_USERID = "1004"          # Use the id command to identify correct values for these.
 SAFEEXEC_GROUPID = "1005"
 
-PRODUCTION = False
-DEBUG = True
+PRODUCTION = True
+DEBUG = False
 
 SQL_DEBUG = False                   # Suppresses logging of SQL queries
 TEMPLATE_DEBUG = DEBUG
