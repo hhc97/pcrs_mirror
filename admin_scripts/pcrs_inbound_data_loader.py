@@ -1,6 +1,7 @@
 import psycopg2
 import sys
 import pickle
+from datetime import date
 
 # csc108 is real
 # 108clone is test
@@ -12,10 +13,11 @@ infile.close()
 
 dbCursor = conn.cursor() # opening conenction to db
 
-sqlInsertRow = sqlInsertRow = "INSERT INTO public.fixit_problemrecommendedfixit(problem_type, problem_id, user_id ) VALUES(%s, %s, %s)" # query, inserting into fixit
+sqlInsertRow = sqlInsertRow = "INSERT INTO public.fixit_problemrecommendedfixit(problem_type, problem_id, user_id, date ) VALUES(%s, %s, %s, %s)" # query, inserting into fixit
 
 for rec_problem in rec_data:
     # problem type, pid, uid
+    rec_problem += (date.today(),)
     dbCursor.execute(sqlInsertRow, rec_problem)
 
 conn.commit()
