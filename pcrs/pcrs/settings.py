@@ -168,6 +168,7 @@ INSTALLED_APPS = (
     'compressor',
     'users',
     'django_cron',
+    'rest_framework',
 ) + PROBLEM_APPS
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

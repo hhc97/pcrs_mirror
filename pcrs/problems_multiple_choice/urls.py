@@ -15,6 +15,7 @@ from problems_multiple_choice.views import (OptionCreateView,
                                             SubmissionAsyncView,
                                             SubmissionMCHistoryAsyncView)
 
+from fixit.views import MCFixitSubmissionAsyncView
 
 urlpatterns = [
     url(r'^list$', ProblemListView.as_view(model=Problem),
@@ -55,6 +56,9 @@ urlpatterns = [
     url(r'^(?P<problem>[0-9]+)/run$',
         SubmissionAsyncView.as_view(model=Submission),
         name='mc_problem_async_submit'),
+     url(r'^(?P<problem>[0-9]+)/fixit$',
+        MCFixitSubmissionAsyncView.as_view(model=Submission),
+        name='mc_problem_async_submit_fixit'),
     url(r'^(?P<problem>[0-9]+)/history$',
         SubmissionMCHistoryAsyncView.as_view(model=Submission),
         name='mc_problem_async_history'),

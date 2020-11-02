@@ -40,6 +40,8 @@ RDB_DATABASE_test = 'crs_data_test'
 # Site prefix
 SITE_PREFIX = ''
 FORCE_SCRIPT_NAME = SITE_PREFIX
+FIXIT = False
+FIXIT_COLOR_DISPLAY = False
 
 # Login details
 LOGIN_URL = SITE_PREFIX + '/login'
@@ -64,6 +66,7 @@ PROBLEM_APPS = (
     'problems_timed',
     'problems_rating',
     'problems_short_answer',
+    'fixit'
 )
 
 CRON_CLASSES = {
