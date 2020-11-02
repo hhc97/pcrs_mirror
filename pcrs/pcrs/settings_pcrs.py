@@ -41,6 +41,7 @@ RDB_DATABASE_test = 'crs_data_test'
 SITE_PREFIX = ''
 FORCE_SCRIPT_NAME = SITE_PREFIX
 FIXIT = False
+FIXIT_COLOR_DISPLAY = False
 
 # Login details
 LOGIN_URL = SITE_PREFIX + '/login'
