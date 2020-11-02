@@ -182,7 +182,6 @@ function submit_mc(submission, problem_pk, div_id) {
      */
 
     var postParams = { csrftoken: csrftoken, submission : submission  };
-
     $.post(root+'/problems/multiple_choice/'+problem_pk+'/run',
             postParams,
             function(data) {
