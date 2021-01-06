@@ -5,16 +5,16 @@ No LSB modules are available.
 Distributor ID: Ubuntu
 Description:    Ubuntu 18.04.5 LTS
 Release:    18.04
-Codename:   trusty
+Codename:   bionic
 </pre></div>
 
 <p>Throughout this guide, some words will be surrounded by asterisks (*), this will denote a variable you will need to fill in.</p>
 
-<p>Before installation, make sure python3.8 and postgres (we used 10.14) are already installed and running. If the installation will be serving C exercises, gcc is required (we used 7.5.0), and Java exercises require a Java developer kit (JDK 1.7) installation (for javac). For R exercises, R is required. If you use a python virtual environment, the packages virtualenv and virtualenvwrapper are required.</p>
+<p>Before installation, make sure python3.8 and postgres (we used 10.14) are already installed and running. If the installation will be serving C exercises, gcc is required (we used 7.5.0), and Java exercises require a Java developer kit (JDK 1.7) installation (for javac). For R exercises, R is required. If you use a python virtual environment, the packages virtualenv and virtualenvwrapper are required. <em>The version numbers provided are for examples or troubleshooting. You should be able to use more recent versions of any of the depencies except for Python.</em> Your Python version should be some version of 3.8 for the current (January 2021) version of PCRS.</p>
 <div class="codehilite"><pre>$ psql --version
-psql <span class="o">(</span>PostgreSQL<span class="o">)</span> 9.3.9<span class="sb"></span>
+psql <span class="o">(</span>PostgreSQL<span class="o">)</span> 10.15<span class="sb">(Ubuntu 10.15-0ubuntu0.18.04.1)</span>
 $ python3 --version
-Python 3.8.5
+Python 3.8.7
 $ gcc --version
 gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
 ...
@@ -24,8 +24,9 @@ $ r --version
 R version 3.4.0
 </pre></div>
 
-  <p>You can either install PCRS onto an empty database or onto an image pre-loaded with videos and content. We have an image available for the C programming language, but <i>this image is not distributed on the web, since it contains solutions to the exercises.</i> To get access, <a href="mailto:c.programming.ontario.online@gmail.com?Subject=Request%20for%20PCRS-C%20Database">mail us from your institution's email address</a>. Please include a web link to your institutional web page, so we can verify that you are a course instructor or system administrator.</p>
-  <p>The remainder of this guide provides details on the individual steps required to install PCRS.</p>
+<p>You can either install PCRS onto an empty database or onto an image pre-loaded with videos and content. We have an image available for the C programming language, but <i>this image is not distributed on the web, since it contains solutions to the exercises.</i> To get access, <a href="mailto:c.programming.ontario.online@gmail.com?Subject=Request%20for%20PCRS-C%20Database">mail us from your institution's email address</a>. Please include a web link to your institutional web page, so we can verify that you are a course instructor or system administrator.</p>
+
+<p>The remainder of this guide provides details on the individual steps required to install PCRS.</p>
 
   <!-- However, the required steps have also been placed into a script. The interactive installer will guide you through the configuration for your specific use case:</p>
   <div class="codehilite"><pre>$ python3 <(curl -L https://bitbucket.org/utmandrew/pcrs/raw/6e77826b08727727524156ada78582b65ed37d6b/admin_scripts/pcrsdevinstaller.py)</pre></div>-->
@@ -56,11 +57,9 @@ WSGIScriptAlias /*Your Prefix* *Path to webfolder*/wsgi.py
 
 <span class="c"># We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks</span>
 <span class="c"># if running multiple sites in the same mod_wsgi process. To fix this, use</span>
-<span class="c"># mod_wsgi daemon mode with each site in its own daemon process, or use</span>
-<span class="c"># os.environ[&quot;DJANGO_SETTINGS_MODULE&quot;] = &quot;pcrs.settings&quot;</span>
+<span class="c"># mod_wsgi daemon mode with each site in its own daemon process.
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;*Path to webfolder*&quot;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&quot;DJANGO_SETTINGS_MODULE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;pcrs.settings&quot;</span>
-
 
 <span class="c"># This application object is used by any WSGI server configured to use this</span>
 <span class="c"># file. This includes Django&#39;s development server, if the WSGI_APPLICATION</span>
@@ -70,7 +69,7 @@ WSGIScriptAlias /*Your Prefix* *Path to webfolder*/wsgi.py
 </pre></div>
 
 <h3 id="markdown-header-virtualenv">Virtualenv</h3>
-<p>PCRS is a django application that runs on python3.6. I recommend setting up a virtual environment for it, but you may skip this step if you'd prefer to install the dependencies in your system python libraries.</p>
+<p>PCRS is a django application that runs on python3.8. I recommend setting up a virtual environment for it, but you may skip this step if you'd prefer to install the dependencies in your system python libraries.</p>
 <pre>$ virtualenv -p /usr/local/bin/python3 ~/.virtualenvs/pcrsenv
 $ workon pcrsenv
 </pre>
