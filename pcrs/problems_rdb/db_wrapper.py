@@ -324,6 +324,11 @@ class StudentWrapper(PostgresWrapper):
                   'passed': False, 'error': None,
                   'expected': None,
                   'actual': None}
+
+        if 'grant' in submission.lower().split():
+            result['error'] = 'Nice try. It would just warn you that no permissions were granted anyway.'
+            return result
+
         try:
             result['expected'] = self.run_query(solution, schema_name=namespace)
             result['expected_attrs'] = [d[0] for d in self._cursor.description]
