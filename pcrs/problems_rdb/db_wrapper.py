@@ -352,6 +352,9 @@ class StudentWrapper(PostgresWrapper):
         if 'grant' in submission.lower().split():
             result['error'] = 'Nice try. It would just warn you that no permissions were granted anyway.'
             return result
+        if 'commit' in submission.lower().replace(';', ' ').split():
+            result['error'] = 'Please do not commit. We use transactions to keep your code from affecting others.'
+            return result
 
         try:
             result['expected'] = self.run_query(solution, schema_name=namespace)
