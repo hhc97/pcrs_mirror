@@ -130,10 +130,34 @@ class PostgresWrapper:
 
     def grant_select_on_schema(self, schema_name, user):
         """
-        Grant usage on schema schema_name to user.
+        Grant select on schema schema_name to user.
         """
         self.execute(
             "GRANT SELECT ON ALL TABLES IN SCHEMA {schema} TO {user}".format(
+                schema=schema_name, user=user))
+
+    def grant_update_on_schema(self, schema_name, user):
+        """
+        Grant update on schema schema_name to user.
+        """
+        self.execute(
+            "GRANT UPDATE ON ALL TABLES IN SCHEMA {schema} TO {user}".format(
+                schema=schema_name, user=user))
+
+    def grant_insert_on_schema(self, schema_name, user):
+        """
+        Grant insert on schema schema_name to user.
+        """
+        self.execute(
+            "GRANT INSERT ON ALL TABLES IN SCHEMA {schema} TO {user}".format(
+                schema=schema_name, user=user))
+
+    def grant_delete_on_schema(self, schema_name, user):
+        """
+        Grant delete on schema schema_name to user.
+        """
+        self.execute(
+            "GRANT DELETE ON ALL TABLES IN SCHEMA {schema} TO {user}".format(
                 schema=schema_name, user=user))
 
     def grant_create_on_schema(self, schema, user):
@@ -396,6 +420,9 @@ class InstructorWrapper(StudentWrapper):
         self.insert_into_schema(schema_name, data)
         self.grant_usage_on_schema(schema_name, usergroup)
         self.grant_select_on_schema(schema_name, usergroup)
+        self.grant_insert_on_schema(schema_name, usergroup)
+        self.grant_update_on_schema(schema_name, usergroup)
+        self.grant_delete_on_schema(schema_name, usergroup)
         self.grant_create_on_schema(schema_name, usergroup)
 
     def create_datasets(self, name_prefix, definition, datasets):

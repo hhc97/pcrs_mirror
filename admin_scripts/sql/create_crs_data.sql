@@ -11,6 +11,21 @@ CREATE USER instructor with password 'instructor';
 GRANT instructors to instructor;
 CREATE ROLE students;
 
+-- The following gives update permissions to users on the various
+-- already existing schema -- if crs_data is being loaded from
+-- an existing instance.
+DO $do$
+DECLARE
+    sch text;
+BEGIN
+    FOR sch IN SELECT nspname FROM pg_namespace
+    LOOP
+        EXECUTE format($$ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA %I TO students $$, sch);
+        EXECUTE format($$ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA %I TO instructors $$, sch);
+    END LOOP;
+END;
+$do$;
+
 -- -- An example of creating an instructor
 -- CREATE user diane with password 'diane';
 -- GRANT instructors to diane;
