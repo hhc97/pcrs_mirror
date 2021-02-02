@@ -133,8 +133,6 @@ class PostgresWrapper:
         self.execute("GRANT USAGE ON ALL SEQUENCES IN SCHEMA {schema} TO {user}".format(
             schema=schema_name, user=user))
 
-        GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA %I to instructors
-
     def grant_select_on_schema(self, schema_name, user):
         """
         Grant select on schema schema_name to user.
@@ -381,7 +379,7 @@ class StudentWrapper(PostgresWrapper):
                 for index in range(len(L)):
                     d[L[index]] = item[index]
                 cursor[cursor_index] = d
-            
+
             self.rollback()
 
             result['actual'] = self.run_query(submission, schema_name=namespace)
@@ -394,16 +392,16 @@ class StudentWrapper(PostgresWrapper):
             for index in range(len(L)):
                 count = L[: index].count(L[index])
                 if count > 0:
-                    L[index] = L[index] + " (" + str(count + 1) + ")"  
-                    
+                    L[index] = L[index] + " (" + str(count + 1) + ")"
+
             cursor = result['actual']
             for cursor_index in range(len(cursor)):
                 d = {}
                 item = cursor[cursor_index]
                 for index in range(len(L)):
                     d[L[index]] = item[index]
-                cursor[cursor_index] = d          
-            
+                cursor[cursor_index] = d
+
             result['passed'] = self.process(result['expected'],
                                             result['actual'],
                                             order_matters)
