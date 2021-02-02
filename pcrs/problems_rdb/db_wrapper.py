@@ -96,6 +96,9 @@ class PostgresWrapper:
         if authorization:
             self.grant_create_on_schema(schema_name, authorization)
             self.grant_select_on_schema(schema_name, authorization)
+            self.grant_insert_on_schema(schema_name, authorization)
+            self.grant_update_on_schema(schema_name, authorization)
+            self.grant_delete_on_schema(schema_name, authorization)
             self.grant_usage_on_schema(schema_name, authorization)
 
     def check_schema_exists(self, schema_name):
