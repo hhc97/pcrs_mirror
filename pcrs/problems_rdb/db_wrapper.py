@@ -130,14 +130,19 @@ class PostgresWrapper:
         """
         self.execute("GRANT USAGE ON SCHEMA {schema} TO {user}".format(
             schema=schema_name, user=user))
+        self.execute("GRANT USAGE ON ALL SEQUENCES IN SCHEMA {schema} TO {user}".format(
+            schema=schema_name, user=user))
+
+        GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA %I to instructors
 
     def grant_select_on_schema(self, schema_name, user):
         """
         Grant select on schema schema_name to user.
         """
-        self.execute(
-            "GRANT SELECT ON ALL TABLES IN SCHEMA {schema} TO {user}".format(
-                schema=schema_name, user=user))
+        self.execute("GRANT SELECT ON ALL TABLES IN SCHEMA {schema} TO {user}".format(
+            schema=schema_name, user=user))
+        self.execute("GRANT SELECT ON ALL SEQUENCES IN SCHEMA {schema} TO {user}".format(
+            schema=schema_name, user=user))
 
     def grant_update_on_schema(self, schema_name, user):
         """
