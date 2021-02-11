@@ -1,9 +1,10 @@
 import os
-from rpy2 import robjects
 from hashlib import sha1
 from datetime import datetime
 import problems.pcrs_languages as languages
-from pcrs.settings import PROJECT_ROOT
+from pcrs.settings import PROJECT_ROOT, INSTALLED_PROBLEM_APPS
+if 'problems_r' in INSTALLED_PROBLEM_APPS:
+    from rpy2 import robjects
 R_TEMPPATH = os.path.join(PROJECT_ROOT, "languages/r/CACHE/")
 
 class RSpecifics(languages.BaseLanguage):
