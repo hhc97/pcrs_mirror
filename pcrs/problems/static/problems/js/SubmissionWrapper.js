@@ -154,11 +154,10 @@ SubmissionWrapper.prototype._shouldUseGradeTable = function() {
 
 SubmissionWrapper.prototype._getTestcasesCallback = function(data) {
     if (data['past_dead_line']) {
-        alert("This submission is past the deadline!")
         this.wrapperDiv.find('#deadline_msg').remove();
         this.wrapperDiv.find('#alert').after(
             '<div id="deadline_msg" class="red-alert">' +
-            'Submitted after the deadline!<div>');
+            'This submission was after the deadline and will not be counted. Submissions before the deadline will still count.<div>');
     }
 
     // use_simpleui is global... gur.

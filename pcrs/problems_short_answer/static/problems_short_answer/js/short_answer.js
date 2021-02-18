@@ -36,11 +36,10 @@ function submit_short_answer(submission, problem_pk, div_id) {
             postParams,
             function(data) {
                 if (data['past_dead_line']){
-                    alert('This submission is past the deadline!');
                     $('#'+div_id).find('#deadline_msg').remove();
                     $('#'+div_id)
                         .find('#alert')
-                        .after('<div id="deadline_msg" class="red-alert">Submitted after the deadline!<div>');
+                        .after('<div id="deadline_msg" class="red-alert">This submission was after the deadline and will not be counted. Submissions before the deadline will still count.<div>');
                 }
                 var display_element = $('#short_answer-'+problem_pk)
                     .find('#alert');

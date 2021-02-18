@@ -106,7 +106,7 @@ function add_mc_history_entry(data, div_id, flag){
 
     if (data['past_dead_line']){
         panel_class = "pcrs-panel-warning";
-        sub_time = sub_time + " Submitted after the deadline";
+        sub_time = sub_time + "Submitted after the deadline";
     }
 
     star_text = "";
@@ -186,11 +186,10 @@ function submit_mc(submission, problem_pk, div_id) {
             postParams,
             function(data) {
                 if (data['past_dead_line']){
-                    alert('This submission is past the deadline!');
                     $('#'+div_id).find('#deadline_msg').remove();
                     $('#'+div_id)
                         .find('#alert')
-                        .after('<div id="deadline_msg" class="red-alert">Submitted after the deadline!<div>');
+                        .after('<div id="deadline_msg" class="red-alert">This submission was after the deadline and will not be counted. Submissions before the deadline will still count.<div>');
                 }
                 var display_element = $('#multiple_choice-'+problem_pk)
                     .find('#alert');
