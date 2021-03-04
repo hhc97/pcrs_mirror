@@ -342,6 +342,23 @@ class Challenge(AbstractSelfAwareModel, AbstractNamedObject,
             problems_completed[content_type.app_label] = submission_class\
                 .get_best_attempts_before_deadlines(user, section)
 
+        if settings.VIDEOS_ARE_PROBLEMS:
+            vid_to_challenge = {}
+            challenge_to_vid = {}
+            for item in ContentSequenceItem.objects.all():
+                if item.content_type.model == 'video':
+                    vid_to_challenge[item.object_id] = item.content_page.challenge.id
+                    challenge_to_vid[item.content_page.challenge_id] = challenge_to_vid.get(item.content_page.challenge.id, 0) + 1
+            challenge_to_total.append(challenge_to_vid)
+
+            # NOTE1: Videos watched at any time are logged. Deadlines are not tracked.
+            # NOTE2: We cannot determine if anyone watched the whole video -- just that they clicked it at least once.
+            watched_vids = {}
+            for item in WatchedVideo.get_watched_pk_list(user):
+                item_challenge = vid_to_challenge.get(item, None)
+                watched_vids[item_challenge] = watched_vids.get(item_challenge, 0) + 1
+            challenge_to_completed.append(watched_vids)
+
         data['best'] = best
         data['problems_completed'] = problems_completed
         # number of problems completed by a student in this challenge

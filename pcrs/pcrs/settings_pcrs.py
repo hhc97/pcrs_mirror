@@ -78,3 +78,7 @@ FILE_DELETE_FREQUENCY = 1440 #24 hrs
 
 # Default lifespan of files on the system
 FILE_LIFESPAN = timedelta(days=1)
+
+# Whether to count videos as problems that require completion or not?
+# Note: Does not check date that video was watched, just that it was watched.
+VIDEOS_ARE_PROBLEMS = False
