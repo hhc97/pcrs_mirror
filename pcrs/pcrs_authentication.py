@@ -10,7 +10,6 @@ class ModelBackend(object):
     """
 
     def authenticate(self, request, username=None, password=None):
-        print("In authenticate")
         UserModel = get_user_model()
         try:
             user = UserModel._default_manager.get_by_natural_key(username)
