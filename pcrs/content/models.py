@@ -287,6 +287,16 @@ class ContentPage(AbstractSelfAwareModel):
         return content
 
 
+class ContentPageActiveTime(models.Model):
+    """
+    A record of how long a user spent on a content page.
+    """
+    content_page = models.ForeignKey(ContentPage, on_delete=models.CASCADE)
+    user = models.ForeignKey(PCRSUser, to_field='username', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=now)
+    activetime = models.IntegerField()
+
+
 class Challenge(AbstractSelfAwareModel, AbstractNamedObject,
                 AbstractLimitedVisibilityObject):
     """

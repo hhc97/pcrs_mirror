@@ -7,9 +7,10 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView, DetailView, DeleteView, UpdateView
 
 from content.models import (Challenge, ContentPage, ContentSequenceItem,
-                            TextBlock)
+                            ContentPageActiveTime, TextBlock)
 from problems.models import get_problem_labels, get_problem_content_types
-from users.views_mixins import CourseStaffViewMixin
+from users.views_mixins import CourseStaffViewMixin, ProtectedViewMixin
+from django.utils.timezone import now
 
 
 class ChallengeAddContentView:
@@ -203,3 +204,21 @@ class ChangeProblemVisibilityView(CourseStaffViewMixin, ChallengeAddContentView,
 
         return HttpResponse(json.dumps({'status': 'ok','old_visibility':old_visibility, 'new_visibility':problem.visibility}),
                                 content_type='application/json')
+
+
+class ContentPageRecordActiveTime(ProtectedViewMixin, CreateView):
+    """
+    Create a record of a user's time on a page.
+    """
+
+    def get_object(self, *args, **kwargs):
+        return ContentPage.objects.get(challenge_id=self.kwargs.get('challenge'), order=self.kwargs.get('page'))
+
+    def post(self, request, *args, **kwargs):
+        page = self.get_object()
+        dt = now()
+        ContentPageActiveTime.objects.create(content_page=page, user=self.request.user, timestamp=dt,
+                                             activetime=request.POST.get('elapsed_time'))
+
+        return HttpResponse(json.dumps({'status': 'ok'}),
+                            content_type='application/json')
