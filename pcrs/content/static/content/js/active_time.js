@@ -11,6 +11,7 @@ function gotFocus() {
 function lostFocus() {
     var curr_time = new Date().getTime();
     var elapsed_time = curr_time - start_time;
-    $.post(window.location.href + "/activetime",
+    var location = window.location.href.split('#')[0];
+    $.post(location + "/activetime",
         {csrftoken: csrftoken, elapsed_time: elapsed_time});
 }
