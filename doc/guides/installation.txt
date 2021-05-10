@@ -10,11 +10,11 @@ Codename:   bionic
 
 <p>Throughout this guide, some words will be surrounded by asterisks (*), this will denote a variable you will need to fill in.</p>
 
-<p>Before installation, make sure python3.8 and postgres (we used 10.14) are already installed and running. If the installation will be serving C exercises, gcc is required (we used 7.5.0), and Java exercises require a Java developer kit (JDK 1.7) installation (for javac). For R exercises, R is required. If you use a python virtual environment, the packages virtualenv and virtualenvwrapper are required. <em>The version numbers provided are for examples or troubleshooting. You should be able to use more recent versions of any of the depencies except for Python.</em> Your Python version should be some version of 3.8 for the current (January 2021) version of PCRS.</p>
+<p>Before installation, make sure python3.9 and postgres (we used 10.14) are already installed and running. If the installation will be serving C exercises, gcc is required (we used 7.5.0), and Java exercises require a Java developer kit (JDK 1.7) installation (for javac). For R exercises, R is required. If you use a python virtual environment, the packages virtualenv and virtualenvwrapper are required. <em>The version numbers provided are for examples or troubleshooting. You should be able to use more recent versions of any of the depencies except for Python.</em> Your Python version should be some version of 3.9 for the current (May 2021) version of PCRS.</p>
 <div class="codehilite"><pre>$ psql --version
 psql <span class="o">(</span>PostgreSQL<span class="o">)</span> 10.15<span class="sb">(Ubuntu 10.15-0ubuntu0.18.04.1)</span>
 $ python3 --version
-Python 3.8.7
+Python 3.9.5
 $ gcc --version
 gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
 ...
@@ -69,7 +69,7 @@ WSGIScriptAlias /*Your Prefix* *Path to webfolder*/wsgi.py
 </pre></div>
 
 <h3 id="markdown-header-virtualenv">Virtualenv</h3>
-<p>PCRS is a django application that runs on python3.8. I recommend setting up a virtual environment for it, but you may skip this step if you'd prefer to install the dependencies in your system python libraries.</p>
+<p>PCRS is a django application that runs on python. I recommend setting up a virtual environment for it, but you may skip this step if you'd prefer to install the dependencies in your system python libraries.</p>
 <pre>$ virtualenv -p /usr/local/bin/python3 ~/.virtualenvs/pcrsenv
 $ workon pcrsenv
 </pre>
