@@ -10,7 +10,7 @@ Codename:   bionic
 
 <p>Throughout this guide, some words will be surrounded by asterisks (*), this will denote a variable you will need to fill in.</p>
 
-<p>Before installation, make sure python3.9 and postgres (we used 10.14) are already installed and running. If the installation will be serving C exercises, gcc is required (we used 7.5.0), and Java exercises require a Java developer kit (JDK 1.7) installation (for javac). For R exercises, R is required. If you use a python virtual environment, the packages virtualenv and virtualenvwrapper are required. <em>The version numbers provided are for examples or troubleshooting. You should be able to use more recent versions of any of the depencies except for Python.</em> Your Python version should be some version of 3.9 for the current (May 2021) version of PCRS.</p>
+<p>Before installation, make sure python3.9 and postgres (we used 10.14 but have also successfully run postgres 11 and 13) are already installed and running. If the installation will be serving C exercises, gcc is required (we used 7.5.0), and Java exercises require a Java developer kit installation (for javac). For R exercises, R is required. If you use a python virtual environment, the packages virtualenv and virtualenvwrapper are required. <em>The version numbers provided are for examples or troubleshooting. You should be able to use more recent versions of any of the depencies except for Python.</em> Your Python version should be some version of 3.9 for the current (June 2021) version of PCRS.</p>
 <div class="codehilite"><pre>$ psql --version
 psql <span class="o">(</span>PostgreSQL<span class="o">)</span> 10.15<span class="sb">(Ubuntu 10.15-0ubuntu0.18.04.1)</span>
 $ python3 --version
