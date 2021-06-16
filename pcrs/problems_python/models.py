@@ -12,11 +12,8 @@ from problems.models import (AbstractProgrammingProblem, AbstractSubmission,
 from pcrs.models import AbstractSelfAwareModel
 from pcrs.settings import PROJECT_ROOT
 
-import python_ta
-import io, re, os, tempfile, multiprocessing
-from contextlib import redirect_stdout
-
-
+import re, os, tempfile, multiprocessing
+from .pyta_helper import pyta_runner
 
 
 class Problem(AbstractProgrammingProblem):
@@ -29,6 +26,7 @@ class Problem(AbstractProgrammingProblem):
     language = models.CharField(max_length=50,
                                 choices=(('python', 'Python 3.4'),),
                                 default='python')
+
 
 class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
     """
@@ -87,15 +85,6 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
         Return the output of PyTA.
         """
 
-        def pyta_runner(q, fname):
-            with io.StringIO() as buf, redirect_stdout(buf):
-                try:
-                    python_ta.check_all(fname, config=pytaConfig)
-                    output = buf.getvalue()
-                except: # Usually an index error in PyTA
-                    output = '[Line 1] PyTA could not be run'
-            q.put(output, timeout=1)    # 1 second timeout to avoid deadlock
-
         submittedFiles = self.preprocessTags()
         # We don't support multiple files yet
         submittedCode = submittedFiles[0]['code']
@@ -110,7 +99,7 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
         testcases = self.problem.testcase_set.all()
         if len(testcases) > 0:
             pre_code = self.problem.testcase_set.all()[0].pre_code
-        
+
         try:
             tempfileDir = os.path.join(PROJECT_ROOT, 'languages', 'python', 'execution', 'temporary')
             pytaConfig = os.path.join(PROJECT_ROOT, 'languages', 'python', 'pyta', 'pyta.config')
@@ -121,10 +110,10 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
 
             submittedCodeFile.write(submittedCode.encode())
             submittedCodeFile.close()
-           
+
             # Workaround since PyTA has a memory leak: it grows in size on every check_all call 
             q = multiprocessing.Queue()
-            p = multiprocessing.Process(target=pyta_runner, args=(q, submittedCodeFile.name))
+            p = multiprocessing.Process(target=pyta_runner, args=(q, pytaConfig, submittedCodeFile.name))
             p.start()
             p.join()
             bufdata = q.get(block=False)    # Not blocking in case no data is entered; being run after join
@@ -132,11 +121,11 @@ class Submission(SubmissionPreprocessorMixin, AbstractSubmission):
                 pytaOutput = bufdata
             else:
                 pytaOutput = re.sub(r'^###.*\n', '', bufdata, flags=re.M)
-                pytaOutput = pytaOutput.split('\n', 3)[-1]
+                pytaOutput = pytaOutput.split('\n', 1)[-1]
                 #remove copied student code where errors occur
                 pytaOutput = re.sub(r'^(\s*\d+|\s{4,}).*\n', '', pytaOutput, flags=re.M)
-                #make it a bit more compact
-                pytaOutput = re.sub(r'\n\n\s*\[', '\n[', pytaOutput).strip().replace('\n', '<br />').replace('[', '&emsp;[')
+                #make it a bit more compact by removing config
+                pytaOutput = re.sub(r'\[INFO.*pyta.config', '', pytaOutput).strip().replace('\n', '<br />').replace('[', '&emsp;[')
         except Exception as e:
             pytaOutput = str(e)
         
