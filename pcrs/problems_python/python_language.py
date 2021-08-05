@@ -23,10 +23,9 @@ class PythonSpecifics(languages.BaseLanguage):
 
         try:
 
-            script = [  "import sys",
-                        "import resource",
-                        "resource.setrlimit(resource.RLIMIT_AS, (200000000, 200000000))",
-						"resource.setrlimit(resource.RLIMIT_CPU, (3, 3))",    # 3 seconds of CPU. Insurance.
+            script = [  "from resource import setrlimit, RLIMIT_AS, RLIMIT_CPU",
+                        "setrlimit(RLIMIT_AS, (200000000, 200000000))",
+						"setrlimit(RLIMIT_CPU, (3, 3))",    # 3 seconds of CPU. Insurance.
                         "import pg_encoder",
                         "expected_val =" + str(target_value),
                         "print(pg_encoder.encode(expected_val, True))",
@@ -63,10 +62,9 @@ class PythonSpecifics(languages.BaseLanguage):
             cumulative_mode = add_params["cumulative_mode"].capitalize()
             heap_primitives = add_params["heap_primitives"].capitalize()
 
-            script = [  "import sys",
-                        "import resource",
-                        "resource.setrlimit(resource.RLIMIT_AS, (200000000, 200000000))",
-						"resource.setrlimit(resource.RLIMIT_CPU, (3, 3))",    # 3 seconds of CPU. Insurance.
+            script = [  "from resource import setrlimit, RLIMIT_AS, RLIMIT_CPU",
+                        "setrlimit(RLIMIT_AS, (200000000, 200000000))",
+                        "setrlimit(RLIMIT_CPU, (3, 3))",    # 3 seconds of CPU. Insurance.
                         "import pg_encoder",
                         "import pg_logger_v3",
                         "code_lines =" + str(user_script.split("\n")),
@@ -119,26 +117,34 @@ class PythonSpecifics(languages.BaseLanguage):
             test_input = str(test_input)
             exp_output = str(exp_output)
 
+            print(exp_output)
+
             # calling the resulting value is always last
             test_params = test_input.split('; ')
             if pre_code:
-                prepended_code = pre_code.split('\n')
+                prepended_code = [f'    {pc}' for pc in pre_code.split('\n')]
             else:
                 prepended_code = []
             code_lines = self.sanitize_user_script(user_script)
+            user_code = '\n'.join(code_lines)
+            code_lines = [f'    {cl}' for cl in code_lines]          # Due to contextlib
 
-            script = [  "import sys, os",
-                        "import resource",
-                        "resource.setrlimit(resource.RLIMIT_AS, (200000000, 200000000))",
-						"resource.setrlimit(resource.RLIMIT_CPU, (3, 3))",    # 3 seconds of CPU. Insurance.
+            script = [  "from contextlib import redirect_stdout",
+                        "from resource import setrlimit, RLIMIT_AS, RLIMIT_CPU",    # Potential security weakness
+                        "setrlimit(RLIMIT_AS, (200000000, 200000000))",
+                        "setrlimit(RLIMIT_CPU, (3, 3))",    # 3 seconds of CPU. Insurance.
                         "import pg_encoder",
-                        "import pg_logger_v3"] +\
+                        "import pg_logger_v3",
+                        "from io import StringIO",
+                        "with redirect_stdout(StringIO()) as _pcrs_stdout:"] +\
                         prepended_code +\
                         code_lines +\
+                        ["_pcrs_out = _pcrs_stdout.getvalue()",
+                         f"_pcrs_code = '''{user_code}'''"] +\
                         test_params[: -1] +\
                         ["result = " + test_params[-1],
                         "exp_output = " + exp_output,
-                        "try:",
+                        "try:",                            # This try is likely a bug -- exp_output is already evaluated -- but we keep it for backwards compatibility with existing content
                         "\texpected_val = eval(exp_output)",
                         "except Exception as e:",
                         "\texpected_val = exp_output",
@@ -221,10 +227,10 @@ class PythonSpecifics(languages.BaseLanguage):
 
         BANNED_BUILTINS = ('reload', 'input', 'apply', 'open', 'compile',
                            'file', 'eval', 'exec', 'execfile',
-                           'exit', 'quit', 'raw_input', 'help',
+                           'exit', 'quit', 'raw_input', 'setrlimit', 'help',
                            'dir', 'globals', 'locals', 'vars')
 
-        code_lines = user_script.split("\n")
+        code_lines = user_script.replace("\t", "    ").split("\n")
 
         import_statement = "import {0}"
         import_as_variable = "{0} = {1}"
