@@ -117,8 +117,6 @@ class PythonSpecifics(languages.BaseLanguage):
             test_input = str(test_input)
             exp_output = str(exp_output)
 
-            print(exp_output)
-
             # calling the resulting value is always last
             test_params = test_input.split('; ')
             if pre_code:
@@ -140,7 +138,7 @@ class PythonSpecifics(languages.BaseLanguage):
                         prepended_code +\
                         code_lines +\
                         ["_pcrs_out = _pcrs_stdout.getvalue()",
-                         f"_pcrs_code = '''{user_code}'''"] +\
+                         f"_pcrs_code = ''.join('''{user_code}'''.split())"] +\
                         test_params[: -1] +\
                         ["result = " + test_params[-1],
                         "exp_output = " + exp_output,
