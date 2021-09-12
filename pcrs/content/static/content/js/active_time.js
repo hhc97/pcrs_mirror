@@ -13,5 +13,7 @@ function lostFocus() {
     var elapsed_time = curr_time - start_time;
     var location = window.location.href.split('#')[0];
     $.post(location + "/activetime",
-        {csrftoken: csrftoken, elapsed_time: elapsed_time});
+        {csrftoken: csrftoken, elapsed_time: elapsed_time})
+     .fail(function(response) {
+        console.log("Error: Cannot log elapsed time")});         // Likely lost authentication, so we'll lose that data.
 }
