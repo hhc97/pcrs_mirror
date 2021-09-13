@@ -216,7 +216,8 @@ class ContentPageRecordActiveTime(ProtectedViewMixin, CreateView):
 
     def post(self, request, *args, **kwargs):
         page = self.get_object()
-        if page:      # page should not be empty
+        elapsed_time = request.POST.get('elapsed_time', None)
+        if page and elapsed_time:      # page and elapsed time should not be empty
             dt = now()
             ContentPageActiveTime.objects.create(content_page=page, user=self.request.user, timestamp=dt,
                                                  activetime=request.POST.get('elapsed_time'))
