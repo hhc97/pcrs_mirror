@@ -3,6 +3,9 @@ $(document).ajaxError(function (event, jqXHR, settings, thrownError) {
     case 0:
         alert('Error: A network request could not be completed, either because of a local javascript error or because the network is down or very slow. If you are submitting an exercise, copy (and save) the code, so you do not lose work.');
         break;
+    case 403:
+         alert('Error: Action did not complete: you need to reauthenticate. If you are submitting an exercise, copy (and save) the code, so you do not lose work, then reload the page.')
+         break;
     case 500:
         alert('Error: PCRS request failed due to internal server error. Please contact your instructor with the time of the request, so they can investigate. Also, save any code you are submitting so you do not lose your work.');
         break;
