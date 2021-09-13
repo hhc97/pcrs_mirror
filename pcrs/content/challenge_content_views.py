@@ -210,6 +210,7 @@ class ContentPageRecordActiveTime(ProtectedViewMixin, CreateView):
     """
     Create a record of a user's time on a page.
     """
+    model = ContentPageActiveTime
 
     def get_object(self, *args, **kwargs):
         return ContentPage.objects.get(challenge_id=self.kwargs.get('challenge'), order=self.kwargs.get('page'))
