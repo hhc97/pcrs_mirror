@@ -2,7 +2,7 @@ import json
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Max
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView, DetailView, DeleteView, UpdateView
 
@@ -11,6 +11,8 @@ from content.models import (Challenge, ContentPage, ContentSequenceItem,
 from problems.models import get_problem_labels, get_problem_content_types
 from users.views_mixins import CourseStaffViewMixin, ProtectedViewMixin
 from django.utils.timezone import now
+
+from pcrs.settings import SITE_PREFIX
 
 
 class ChallengeAddContentView:
@@ -212,6 +214,9 @@ class ContentPageRecordActiveTime(ProtectedViewMixin, CreateView):
     """
     model = ContentPageActiveTime
     fields = '__all__' 
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(f'/{SITE_PREFIX}')
 
     def get_object(self, *args, **kwargs):
         return ContentPage.objects.get(challenge_id=self.kwargs.get('challenge'), order=self.kwargs.get('page'))
