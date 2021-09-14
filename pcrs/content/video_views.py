@@ -1,6 +1,6 @@
 import json
 import logging
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import CreateView
 from django.db.utils import IntegrityError
 from content.forms import VideoForm
@@ -10,6 +10,8 @@ from pcrs.generic_views import GenericItemListView, GenericItemCreateView, \
     GenericItemUpdateView
 from django.utils.timezone import now
 from users.views_mixins import CourseStaffViewMixin, ProtectedViewMixin
+
+from pcrs.settings import SITE_PREFIX
 
 
 class VideoListView(CourseStaffViewMixin, GenericItemListView):
@@ -54,6 +56,9 @@ class VideoRecordWatchView(ProtectedViewMixin, CreateView):
     """
     model = Video
     fields = '__all__'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(SITE_PREFIX)
 
     def post(self, request, *args, **kwargs):
         video = self.get_object()
