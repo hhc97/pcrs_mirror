@@ -198,9 +198,7 @@ class SubmissionViewMixin:
         problem_class = self.model.get_problem_class()
         pk = self.kwargs.get('problem')
         logger = logging.getLogger('activity.logging')
-        logger.info(str(now()) + " | " +
-                    str(self.request.user) + " | View " +
-                    str(problem_class.get_problem_type_name()) + " " + str(pk))
+        logger.info(f'{now()} | {self.request.user} | View {problem_class.get_problem_type_name()} {pk}')
 
         if self.request.user.is_student:
             return get_object_or_404(problem_class, pk=pk, visibility='open')
@@ -312,10 +310,8 @@ class SubmissionAsyncView(SubmissionViewMixin, SingleObjectMixin,
         user, section = self.request.user, self.get_section()
 
         logger = logging.getLogger('activity.logging')
-        logger.info(str(localtime(self.object.timestamp)) + " | " +
-                    str(user) + " | Submit " +
-                    str(problem.get_problem_type_name()) + " " +
-                    str(problem.pk))
+        logger.info(f'{now()} | {user} | Submit {problem.get_problem_type_name()} {problem.pk}')
+
         try:
             deadline = problem.challenge.quest.sectionquest_set\
                 .get(section=section).due_on
