@@ -216,7 +216,7 @@ class ContentPageRecordActiveTime(ProtectedViewMixin, CreateView):
     fields = '__all__' 
 
     def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect(f'/{SITE_PREFIX}')
+        return HttpResponseRedirect(SITE_PREFIX)
 
     def get_object(self, *args, **kwargs):
         return ContentPage.objects.get(challenge_id=self.kwargs.get('challenge'), order=self.kwargs.get('page'))
