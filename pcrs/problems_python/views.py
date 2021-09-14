@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 
-from pcrs.settings import PYTA
+from pcrs.settings import PYTA, DEBUG
 
 from problems.views import SubmissionViewMixin, SubmissionView, SubmissionAsyncView
 
@@ -48,8 +48,12 @@ class PyTAClickEventView(TemplateView):
         dropdown_id = request.POST.get('problem_id', 'PyTADropdownError')[12:]
         try:
             submission = next(submission_model.objects.filter(problem_id=dropdown_id, user_id=request.user).order_by("-id").iterator())
-        except (IndexError, AttributeError):
+        except IndexError:
             return HttpResponse(status=500)
+        except AttributeError:    # AnonymousUser
+            if DEBUG:
+                raise
+            return HttpResponse(status=204)
         click_events = self.model.objects.filter(submission_id=submission.id)
         if click_events.exists():
             click_event = click_events[0]    # Should be 1. Concurrency issues could lead to more than 1.
