@@ -224,5 +224,4 @@ class ContentPageRecordActiveTime(ProtectedViewMixin, CreateView):
             ContentPageActiveTime.objects.create(content_page=page, user=self.request.user, timestamp=dt,
                                                  activetime=request.POST.get('elapsed_time'))
 
-        return HttpResponse(json.dumps({'status': 'ok'}),
-                            content_type='application/json')
+        return HttpResponse(status=204)
