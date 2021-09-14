@@ -50,8 +50,9 @@ class PyTAClickEventView(TemplateView):
             submission = next(submission_model.objects.filter(problem_id=dropdown_id, user_id=request.user).order_by("-id").iterator())
         except (IndexError, AttributeError):
             return HttpResponse(status=500)
-        if self.model.objects.filter(submission_id=submission.id).exists():
-            click_event = self.model.objects.get(submission_id=submission.id)
+        click_events = self.model.objects.filter(submission_id=submission.id)
+        if click_events.exists():
+            click_event = click_events[0]    # Should be 1. Concurrency issues could lead to more than 1.
             click_event.click_count += 1
             click_event.save()
         else:
