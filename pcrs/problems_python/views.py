@@ -44,6 +44,9 @@ class PyTAClickEventView(TemplateView):
     """
     model = None
     def post(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            # AnonymousUser - can't register a click event
+            return HttpResponse(status=204)
         submission_model = self.model.get_submission_class()
         dropdown_id = request.POST.get('problem_id', 'PyTADropdownError')[12:]
         try:
