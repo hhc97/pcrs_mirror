@@ -198,7 +198,7 @@ class PythonSpecifics(languages.BaseLanguage):
         ''' Run python subprocess executed with provided script. Return process p.
         '''
 
-        command = ['python3']
+        command = ['python3.9']
         module_dir = os.path.dirname(__file__)
         file_path = os.path.join(module_dir, '../languages/python/')
         abs_path = os.path.abspath(file_path)
