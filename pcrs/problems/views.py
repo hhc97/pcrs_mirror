@@ -295,10 +295,18 @@ class SubmissionAsyncView(SubmissionViewMixin, SingleObjectMixin,
         try:
             results = self.record_submission(request)
         except AttributeError: # Probably an anonymous user
-            if DEBUG:
-                raise
             return HttpResponse(json.dumps({
                                 'results': ([], "Your session has expired. Please copy your submission (to save it) and refresh the page before submitting again."),
+                                'score': 0,
+                                'sub_pk': 0,
+                                'best': False,
+                                'past_dead_line': False,
+                                'max_score': 1}, cls=DateEncoder),
+                                content_type='application/json')
+
+        if not hasattr(self, "object"):     # Triggers when record_submission does not find a submission
+            return HttpResponse(json.dumps({
+                                'results': ([], "This submission contained no text."),
                                 'score': 0,
                                 'sub_pk': 0,
                                 'best': False,
