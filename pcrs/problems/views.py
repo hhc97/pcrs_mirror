@@ -310,7 +310,7 @@ class SubmissionAsyncView(SubmissionViewMixin, SingleObjectMixin,
         user, section = self.request.user, self.get_section()
 
         logger = logging.getLogger('activity.logging')
-        logger.info(f'{now()} | {user} | Submit {problem.get_problem_type_name()} {problem.pk} | {results} | {hasattr(self, "object")}')
+        logger.info(f'{now()} | {user} | Submit {problem.get_problem_type_name()} {problem.pk}')
 
         try:
             deadline = problem.challenge.quest.sectionquest_set\
