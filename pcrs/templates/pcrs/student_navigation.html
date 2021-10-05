@@ -16,15 +16,6 @@
                             Quests
                         </a>
                     </li>
-		    {% if fixit %}
-		    {% if fixit_display_color %}
-		    <li style="background-color: #FFF000">
-		    {% else %}
-		    <li>
-		    {% endif %}
-			    <a href="{{ site_prefix }}/fixit/main" title="Fixit Review Module">Fixit Review Module</a>
-		    </li>
-		    {% endif %}
 		</ul>
                 {% if 'problems_c' in problem_types or 'problems_python' in problem_types or 'problems_ra' in problem_types or 'problems_sql' in problem_types %}
                 <ul class="pcrs-navbar-nav">

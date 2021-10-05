@@ -8,6 +8,4 @@ def site_settings(request):
             'report_bugs': settings.REPORT_BUGS,
             'languages': languages, 
             'problem_types': problem_types,
-            'fixit': settings.FIXIT,
-            'fixit_display_color': settings.FIXIT_COLOR_DISPLAY,
             'auth_shibboleth': settings.AUTH_TYPE == 'shibboleth'}

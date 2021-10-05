@@ -3,7 +3,6 @@ from django.conf.urls import url
 from problems.views import *
 from .views import *
 from problems.st_async_requests import visualizer_details
-from fixit.views import FixitPythonSubmissionAsyncView
 
 from .forms import ProblemForm, TestCaseForm
 from .models import Problem, TestCase, Submission, PyTAClickEvent
@@ -54,9 +53,6 @@ urlpatterns = [
         name='coding_problem_submit'),
     url(r'^(?P<problem>[0-9]+)/run$',
         PythonSubmissionAsyncView.as_view(model=Submission),
-        name='coding_problem_async_submit'),
-    url(r'^(?P<problem>[0-9]+)/fixit',
-        FixitPythonSubmissionAsyncView.as_view(model=Submission),
         name='coding_problem_async_submit'),
     url(r'^editor/run$',
         EditorAsyncView.as_view(model=Submission, pType='python'),
