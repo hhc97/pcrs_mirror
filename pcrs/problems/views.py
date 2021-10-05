@@ -9,7 +9,7 @@ from django.shortcuts import redirect, get_object_or_404, render
 from django.views.generic import (DetailView, UpdateView, DeleteView, FormView,
                                   View)
 from django.views.generic.detail import SingleObjectMixin
-from django.utils.timezone import localtime, now
+from django.utils.timezone import now
 from pcrs.settings import DEBUG, FILE_LIFESPAN
 
 from pcrs.generic_views import (GenericItemCreateView, GenericItemListView,

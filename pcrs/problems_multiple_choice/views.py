@@ -17,7 +17,7 @@ from users.views import UserViewMixin
 from users.views_mixins import CourseStaffViewMixin, ProtectedViewMixin
 
 import logging
-from django.utils.timezone import localtime
+from django.utils.timezone import now
 
 
 
@@ -170,10 +170,7 @@ class SubmissionAsyncView(SubmissionViewMixin, SingleObjectMixin, View,
             deadline = None
 
         logger = logging.getLogger('activity.logging')
-        logger.info(str(localtime(self.submission.timestamp)) + " | " +
-                    str(user) + " | Submit " +
-                    str(problem.get_problem_type_name()) + " " +
-                    str(problem.pk))
+        logger.info(f'{now()} | {user} | Submit {problem.get_problem_type_name()} {problem.pk}')
 
         return HttpResponse(json.dumps({
             'score': self.submission.score,
