@@ -33,6 +33,7 @@ class PostgresWrapper:
         self._conn = psycopg2.connect(database=self.database,
                                       user=self.user, password=self.user,
                                       options='-c statement_timeout=2000')
+        self._conn.set_client_encoding('utf8')
         self._cursor = self._conn.cursor(cursor_factory=extras.DictCursor)
 
     def close(self):
