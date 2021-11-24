@@ -8,7 +8,8 @@ from content.challenge_content_views import (TextCreateView,
                                              ItemDeleteView,
                                              ChallengePagesObjectsView,
                                              ChangeProblemVisibilityView,
-                                             PageDeleteView)
+                                             PageDeleteView,
+                                             ContentPageRecordActiveTime)
 from content.challenge_views import *
 from content.quest_views import (QuestCreateView, QuestUpdateView, QuestListView,
                                  QuestSaveChallengesView, QuestSectionListView,
@@ -64,6 +65,8 @@ urlpatterns = [
     url(r'^challenges/(?P<challenge>[0-9]+)/(?P<page>[0-9]+)/get_page_data$',
         ReactiveContentPageData.as_view(),
         name='challenge_page_data'),
+    url(r'^challenges/(?P<challenge>[0-9]+)/(?P<page>[0-9]+)/activetime$',
+        ContentPageRecordActiveTime.as_view(), name='challenge_page_time'),
 
 
     url(r'^challenges/(?P<pk>[0-9]+)/delete$',
